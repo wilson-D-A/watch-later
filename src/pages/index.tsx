@@ -1,78 +1,112 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import tags from '@/pages/api/watchlater_grouped.json';
+import Image from 'next/image';
+import { useState } from 'react';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+function getYouTubeId(url: string): string | null {
+	const match = url.match(
+		/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+	);
+	return match ? match[1] : null;
+}
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
-    >
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the index.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs/pages/getting-started?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+	const [getTags, setTags] = useState<string>('');
+	const [getSubcategory, setSubcategory] = useState<string[]>([]);
+
+	const grouped = tags;
+	const tagList: { tag: string; length: number }[] = grouped.map((group) => ({
+		tag: group.tag,
+		length: group.videos.length,
+	}));
+	const filteredTag = grouped.filter((group) => group.tag === getTags);
+	const allVideos = filteredTag.flatMap((group) => group.videos);
+	console.log(allVideos);
+	return (
+		<div className='h-screen w-screen p-4'>
+			<div className=' grid grid-cols-5 grid-rows-7 gap-4 h-full '>
+				<nav className=' rounded col-span-full bg-blue-400'>.</nav>
+				<aside className='relative rounded row-span-6 bg-red-500 h-0min-h-0 overflow-hidden'>
+					<div className='absolute top-0 left-0 bg-gray-400 w-full h-10 pb-10'>
+						.
+					</div>
+					<ul className='overflow-y-scroll w-auto h-full min-h-0 py-10 scrollbar-none'>
+						<li>tags</li>
+						{tagList.map((tag) => (
+							<li className=' ' key={tag.tag}>
+								<button
+									className='cursor-pointer'
+									onClick={() => {
+										setTags(tag.tag);
+										setSubcategory([]);
+									}}
+								>
+									<span>{tag.tag}</span>
+									<span className='ml-2 text-sm text-gray-500'>
+										{tag.length}
+									</span>
+								</button>
+							</li>
+						))}
+					</ul>
+				</aside>
+				<main className='rounded row-span-6 col-span-4 h-full min-h-0 overflow-hidden'>
+					<section className='h-full min-h-0 flex flex-col gap-4'>
+						<div className='rounded bg-gray-400 w-auto h-auto'>
+							{[
+								...new Set(allVideos.map((video) => video.subcategory).flat()),
+							].map((subcategory) => (
+								<button
+									onClick={() =>
+										setSubcategory((prev) => {
+											if (prev.includes(subcategory)) {
+												return prev.filter((item) => item !== subcategory);
+											} else {
+												return [...prev, subcategory];
+											}
+										})
+									}
+									key={subcategory}
+									className='mr-2 cursor-pointer inline'
+								>
+									{subcategory}
+								</button>
+							))}
+						</div>
+						<div className='rounded bg-gray-300 w-auto h-8'></div>
+						<section
+							className={`${allVideos.length < 9 ? 'grid-rows-3' : 'xl:grid-rows-3'} grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 flex-1 min-h-0 overflow-y-auto scrollbar-none`}
+						>
+							{allVideos
+								.filter((video) =>
+									getSubcategory.length > 0
+										? video.subcategory.some((subcategory) =>
+												getSubcategory.includes(subcategory),
+											)
+										: true,
+								)
+								.map((video) => (
+									<div
+										key={video.index}
+										className='rounded bg-gray-200 w-auto h-50'
+									>
+										<div className='rounded bg-gray-400 w-auto h-10'>
+											{video.title}
+										</div>
+										<Image
+											src={`https://i.ytimg.com/vi/${getYouTubeId(video.link)}/mqdefault.jpg`}
+											alt={video.title}
+											width={300}
+											height={200}
+										/>
+										<div className='rounded bg-gray-300 w-auto h-8'>
+											{video.channelName}
+										</div>
+									</div>
+								))}
+						</section>
+					</section>
+					<section></section>
+				</main>
+			</div>
+		</div>
+	);
 }

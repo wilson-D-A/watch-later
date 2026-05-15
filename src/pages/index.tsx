@@ -32,11 +32,11 @@ export default function Home() {
 	console.log(getSubcategory);
 	return (
 		<div className='h-screen w-screen p-4'>
-			<div className=' grid grid-cols-5 grid-rows-7 gap-4 h-full '>
-				<nav className=' rounded col-span-full border-border bg-border/50 border-2 row-span-1 flex items-center justify-between px-5'>
+			<div className=' grid grid-cols-5 grid-rows-7  gap-4 h-full '>
+				<nav className=' rounded col-span-full border-border bg-border/30 border-2 row-span-1 flex items-center justify-between px-5'>
 					<div className='flex  gap-3 items-center'>
 						<h1 className='text-xl font-black text-accent'>Watched Videos</h1>
-						<span className='text-md font-medium text-foreground'>
+						<span className=' text-center px-5 py-1 text-zinc-400 rounded h-auto align-middle bg-zinc-900'>
 							{allVideos.length} videos
 						</span>
 					</div>
@@ -49,7 +49,7 @@ export default function Home() {
 								setTags('');
 								setSubcategory([]);
 							}}
-							className={`cursor-pointer text-center px-5 py-1 text-zinc-600 rounded h-auto align-middle  ${getTags === '' ? 'bg-accent text-zinc-100' : 'bg-zinc-900'}`}
+							className={`cursor-pointer text-center px-5 py-1 text-zinc-400 rounded h-auto align-middle  ${getTags === '' ? 'bg-accent text-zinc-900' : 'bg-zinc-900'}`}
 						>
 							all videos
 						</span>
@@ -59,7 +59,7 @@ export default function Home() {
 						{tagList.map((tag) => (
 							<li className=' ' key={tag.tag}>
 								<button
-									className={`${getTags === tag.tag ? 'bg-accent text-zinc-100' : ''} rounded hover:text-zinc-100 cursor-pointer flex justify-between w-full px-2 py-1 pb-1  hover:bg-zinc-900  text-zinc-600`}
+									className={`${getTags === tag.tag ? 'bg-accent text-zinc-900' : ''} rounded hover:text-zinc-100 cursor-pointer flex justify-between w-full px-2 py-1 pb-1  hover:bg-zinc-900  text-zinc-400`}
 									onClick={() => {
 										setTags(tag.tag);
 										setSubcategory([]);
@@ -68,7 +68,7 @@ export default function Home() {
 									<span className='w-28 text-start overflow-hidden'>
 										{tag.tag}
 									</span>
-									<span className='ml-2  text-gray-500'>{tag.length}</span>
+									<span className='ml-2  text-zinc-500'>{tag.length}</span>
 								</button>
 							</li>
 						))}
@@ -78,19 +78,22 @@ export default function Home() {
 					<section className='h-full min-h-0 flex flex-col gap-4 '>
 						{getTags && (
 							<div className='rounded  border-border border-2 w-auto h-auto'>
-								<div className='flex flex-wrap gap-2 mx-2 my-2'>
+								<div className='flex flex-wrap gap-2 mx-2 my-2 '>
 									<h2>concept</h2>
-									{[
-										...new Set(allVideos.map((video) => video.subcategory[0])),
-									].map((concept, index) => (
-										<span
-											onClick={() => handleSubcategoryClick(concept)}
-											className={`${getSubcategory.includes(concept) ? 'ring-[#aad97d] text-zinc-200 bg-[#aad97d]' : 'ring-border '}cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
-											key={index}
-										>
-											{concept}
-										</span>
-									))}
+									{[...new Set(allVideos.map((video) => video.subcategory[0]))]
+										.slice(0, 10)
+										.map((concept, index) => (
+											<span
+												onClick={() => handleSubcategoryClick(concept)}
+												className={`${getSubcategory.includes(concept) ? 'bg-concept ring-[#aad97d] text-zinc-200' : 'ring-border'} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
+												key={index}
+											>
+												{concept}
+											</span>
+										))}
+									<span className='cursor-pointer text-zinc-400 bg-zinc-900  ring-1 ring-border px-2 py-1 rounded'>
+										more
+									</span>
 								</div>
 								<div className='flex flex-wrap gap-2 mx-2 my-2'>
 									<h2>tools</h2>
@@ -99,7 +102,7 @@ export default function Home() {
 									].map((tools, index) => (
 										<span
 											onClick={() => handleSubcategoryClick(tools)}
-											className={`${getSubcategory.includes(tools) ? 'ring-[#5a97d6] text-zinc-200 bg-tools' : 'ring-border '}cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
+											className={`${getSubcategory.includes(tools) ? ' bg-tools ring-[#5a97d6] text-zinc-200' : 'ring-border '} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
 											key={index}
 										>
 											{tools}
@@ -113,7 +116,7 @@ export default function Home() {
 									].map((topics, index) => (
 										<span
 											onClick={() => handleSubcategoryClick(topics)}
-											className={`${getSubcategory.includes(topics) ? 'ring-[#b7a1ff] text-zinc-200 bg-topics' : 'ring-border '}cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
+											className={`${getSubcategory.includes(topics) ? ' bg-topics ring-[#b7a1ff] text-zinc-200' : 'ring-border '} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
 											key={index}
 										>
 											{topics}
@@ -139,19 +142,24 @@ export default function Home() {
 										key={video.index}
 										className='flex flex-col justify-between  rounded border-border bg-border/50 border-2 min-w-60 h-72 '
 									>
-										<Image
-											src={`https://i.ytimg.com/vi/${getYouTubeId(video.link)}/mqdefault.jpg`}
-											alt={video.title}
-											width={300}
-											height={200}
-										/>
-										<h2 className='mt-1 px-2  text-center rounded w-full h-auto truncate'>
-											{video.title}
-										</h2>
-										<span className=' ml-2 rounded text-xs text-zinc-400 w-auto h-auto'>
-											{video.channelName}
-										</span>
-										<div className='mx-2 mb-2 rounded  text-xs w-auto flex flex-wrap gap-1 '>
+										<div className='relative w-full h-40 mb-2'>
+											<Image
+												src={`https://i.ytimg.com/vi/${getYouTubeId(video.link)}/mqdefault.jpg`}
+												alt={video.title}
+												fill
+												sizes='(max-width: 768px) 100vw, 300px'
+												className='object-cover rounded-t'
+											/>
+										</div>
+										<div className='grow'>
+											<h2 className='mt-1 px-2 text-start rounded w-full h-auto line-clamp-2'>
+												{video.title}
+											</h2>
+											<span className=' ml-2 rounded text-xs text-zinc-400 w-auto h-auto'>
+												{video.channelName}
+											</span>
+										</div>
+										<div className='mx-2 mb-2 rounded  text-xs w-auto flex flex-wrap gap-2 '>
 											<span className='ring-[#aad97d] ring-1 px-1 text-zinc-400 rounded bg-concept w-auto h-auto '>
 												{video.subcategory[0]}
 											</span>

@@ -8,9 +8,11 @@ function getYouTubeId(url: string): string | null {
 	);
 	return match ? match[1] : null;
 }
+
 export default function Home() {
 	const [getTags, setTags] = useState<string>('');
 	const [getSubcategory, setSubcategory] = useState<string[]>([]);
+	const [isMoreConcepts, setIsMoreConcepts] = useState<boolean>(false);
 
 	const grouped = tags;
 	const tagList: { tag: string; length: number }[] = grouped.map((group) => ({
@@ -29,7 +31,10 @@ export default function Home() {
 	};
 
 	const allVideos = filteredTag.flatMap((group) => group.videos);
-	console.log(getSubcategory);
+	const ConceptList = [
+		...new Set(allVideos.map((video) => video.subcategory[0])),
+	].toSorted((a, b) => a.localeCompare(b));
+
 	return (
 		<div className='h-screen w-screen p-4'>
 			<div className=' grid grid-cols-5 grid-rows-7  gap-4 h-full '>
@@ -63,6 +68,7 @@ export default function Home() {
 									onClick={() => {
 										setTags(tag.tag);
 										setSubcategory([]);
+										setIsMoreConcepts(false);
 									}}
 								>
 									<span className='w-28 text-start overflow-hidden'>
@@ -80,20 +86,26 @@ export default function Home() {
 							<div className='rounded  border-border border-2 w-auto h-auto'>
 								<div className='flex flex-wrap gap-2 mx-2 my-2 '>
 									<h2>concept</h2>
-									{[...new Set(allVideos.map((video) => video.subcategory[0]))]
-										.slice(0, 10)
-										.map((concept, index) => (
-											<span
-												onClick={() => handleSubcategoryClick(concept)}
-												className={`${getSubcategory.includes(concept) ? 'bg-concept ring-[#aad97d] text-zinc-200' : 'ring-border'} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
-												key={index}
-											>
-												{concept}
-											</span>
-										))}
-									<span className='cursor-pointer text-zinc-400 bg-zinc-900  ring-1 ring-border px-2 py-1 rounded'>
-										more
-									</span>
+									{ConceptList.slice(
+										0,
+										isMoreConcepts ? ConceptList.length : 10,
+									).map((concept, index) => (
+										<span
+											onClick={() => handleSubcategoryClick(concept)}
+											className={`${getSubcategory.includes(concept) ? 'bg-concept ring-[#aad97d] text-zinc-200' : 'ring-border'} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
+											key={index}
+										>
+											{concept}
+										</span>
+									))}
+									{ConceptList.length > 10 && (
+										<span
+											onClick={() => setIsMoreConcepts(!isMoreConcepts)}
+											className='cursor-pointer text-zinc-900 hover:bg-accent/50 hover:text-zinc-200 bg-accent ring-1 ring-border px-2 py-1 rounded'
+										>
+											{isMoreConcepts ? 'less' : 'more'}
+										</span>
+									)}
 								</div>
 								<div className='flex flex-wrap gap-2 mx-2 my-2'>
 									<h2>tools</h2>

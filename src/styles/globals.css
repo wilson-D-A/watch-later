@@ -27,7 +27,8 @@ root {
 @layer base {
   h1,
   h2,
-  h3 {
+  h3,
+  input {
     font-family: var(--font-sans);
     font-size: 0.75rem;
     font-weight: 600;

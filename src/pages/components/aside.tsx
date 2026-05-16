@@ -15,7 +15,6 @@ interface IAsideProps {
 const Aside: React.FunctionComponent<IAsideProps> = ({
 	getTags,
 	setTags,
-	getSubcategory,
 	setSubcategory,
 	setIsMoreConcepts,
 	showComponent,

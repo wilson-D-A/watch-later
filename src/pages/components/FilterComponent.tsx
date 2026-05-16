@@ -21,7 +21,6 @@ interface IFilterProps {
 const Filter: React.FunctionComponent<IFilterProps> = ({
 	allVideos,
 	getTags,
-	setTags,
 	getSubcategory,
 	handleSubcategoryClick,
 	setIsMoreConcepts,

@@ -19,13 +19,8 @@ interface IMainProps {
 }
 
 const Main: React.FunctionComponent<IMainProps> = ({
-	getTags,
 	getSubcategory,
-	handleSubcategoryClick,
 	allVideos,
-	ConceptList,
-	isMoreConcepts,
-	setIsMoreConcepts,
 	getYouTubeId,
 	children,
 }) => {

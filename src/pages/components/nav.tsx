@@ -20,7 +20,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
 			<div className='flex flex-col sm:flex-row gap-3 items-center  '>
 				<h1 className='text-xl  font-black text-accent'>Watch Later</h1>
 				<span className=' text-center px-5 py-1 text-zinc-400 rounded h-auto align-middle bg-zinc-900'>
-					{allVideos.length} videos
+					{allVideos?.length} videos
 				</span>
 			</div>
 			{showComponent && (

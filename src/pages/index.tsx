@@ -1,8 +1,10 @@
 import tags from '@/pages/api/watchlater_grouped.json';
 
 import { useEffect, useState } from 'react';
+import FilterIcon from '../../public/FilterIcon';
 import Aside from './components/aside';
 import Main from './components/main';
+import FilterComponent from './FilterComponent';
 import Nav from './nav';
 
 function getYouTubeId(url: string): string | null {
@@ -73,6 +75,9 @@ export default function Home() {
 
 				{showComponent && (
 					<Aside
+						showComponent={showComponent}
+						setFilterOpen={setFilterOpen}
+						setAsideOpen={setAsideOpen}
 						getTags={getTags}
 						setTags={setTags}
 						getSubcategory={getSubcategory}
@@ -85,6 +90,9 @@ export default function Home() {
 					<section className='h-full min-h-0 flex flex-col gap-4 '>
 						{asideOpen ? (
 							<Aside
+								showComponent={showComponent}
+								setFilterOpen={setFilterOpen}
+								setAsideOpen={setAsideOpen}
 								getTags={getTags}
 								setTags={setTags}
 								getSubcategory={getSubcategory}
@@ -93,65 +101,17 @@ export default function Home() {
 								tagList={tagList}
 							/>
 						) : filterOpen ? (
-							getTags && (
-								<div className='rounded  border-border border-2 w-auto h-auto'>
-									<div className='flex flex-wrap gap-2 mx-2 my-2 '>
-										<h2>concept</h2>
-										{ConceptList.slice(
-											0,
-											isMoreConcepts ? ConceptList.length : 10,
-										).map((concept, index) => (
-											<span
-												onClick={() => handleSubcategoryClick(concept)}
-												className={`${getSubcategory.includes(concept) ? 'bg-concept ring-[#aad97d] text-zinc-200' : 'ring-border'} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
-												key={index}
-											>
-												{concept}
-											</span>
-										))}
-										{ConceptList.length > 10 && (
-											<span
-												onClick={() => setIsMoreConcepts(!isMoreConcepts)}
-												className='cursor-pointer text-zinc-900 hover:bg-accent/50 hover:text-zinc-200 bg-accent ring-1 ring-border px-2 py-1 rounded'
-											>
-												{isMoreConcepts ? 'less' : 'more'}
-											</span>
-										)}
-									</div>
-									<div className='flex flex-wrap gap-2 mx-2 my-2'>
-										<h2>tools</h2>
-										{[
-											...new Set(
-												allVideos.map((video) => video.subcategory[1]),
-											),
-										].map((tools, index) => (
-											<span
-												onClick={() => handleSubcategoryClick(tools)}
-												className={`${getSubcategory.includes(tools) ? ' bg-tools ring-[#5a97d6] text-zinc-200' : 'ring-border '} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
-												key={index}
-											>
-												{tools}
-											</span>
-										))}
-									</div>
-									<div className='flex flex-wrap gap-2 mx-2 my-2'>
-										<h2>topic</h2>
-										{[
-											...new Set(
-												allVideos.map((video) => video.subcategory[2]),
-											),
-										].map((topics, index) => (
-											<span
-												onClick={() => handleSubcategoryClick(topics)}
-												className={`${getSubcategory.includes(topics) ? ' bg-topics ring-[#b7a1ff] text-zinc-200' : 'ring-border '} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
-												key={index}
-											>
-												{topics}
-											</span>
-										))}
-									</div>
-								</div>
-							)
+							<FilterComponent
+								allVideos={allVideos}
+								getTags={getTags}
+								setTags={setTags}
+								handleSubcategoryClick={handleSubcategoryClick}
+								getSubcategory={getSubcategory}
+								setSubcategory={setSubcategory}
+								setIsMoreConcepts={setIsMoreConcepts}
+								ConceptList={ConceptList}
+								isMoreConcepts={isMoreConcepts}
+							/>
 						) : (
 							<Main
 								getTags={getTags}
@@ -162,30 +122,49 @@ export default function Home() {
 								isMoreConcepts={isMoreConcepts}
 								setIsMoreConcepts={setIsMoreConcepts}
 								getYouTubeId={getYouTubeId}
-							/>
+							>
+								{showComponent && (
+									<FilterComponent
+										allVideos={allVideos}
+										getTags={getTags}
+										setTags={setTags}
+										handleSubcategoryClick={handleSubcategoryClick}
+										getSubcategory={getSubcategory}
+										setSubcategory={setSubcategory}
+										setIsMoreConcepts={setIsMoreConcepts}
+										ConceptList={ConceptList}
+										isMoreConcepts={isMoreConcepts}
+									/>
+								)}
+							</Main>
 						)}
-						<div className='rounded border-border border-2 w-auto h-20 flex justify-between items-center'>
-							<div className='flex items-center'>
-								<span
-									onClick={() => setAsideOpen(!asideOpen)}
-									className='bg-accent cursor-pointer rounded mx-2 w-30 truncate text-zinc-900 px-2 py-1 '
-								>
-									{getTags || 'all videos'}
-								</span>
-								<span
-									onClick={() => setFilterOpen(!filterOpen)}
-									className='text-zinc-400  mx-2'
-								>
-									⦿
-								</span>
+						{!showComponent && (
+							<div className='rounded border-border border-2 w-auto h-15 flex justify-between items-center'>
+								<div className='flex items-center'>
+									<span
+										onClick={() => setAsideOpen(!asideOpen)}
+										className='bg-accent cursor-pointer rounded mx-2 w-30 truncate text-zinc-900 px-2 py-1 '
+									>
+										{getTags || 'all videos'}
+									</span>
+									<span
+										onClick={() => {
+											if (!getTags) return;
+											setFilterOpen(!filterOpen);
+										}}
+										className={`${!getTags ? 'pointer-events-none ' : 'fill-accent cursor-pointer'} text-zinc-400  mx-2`}
+									>
+										<FilterIcon width={16} height={16} className={` `} />
+									</span>
+								</div>
+								<input
+									type='text'
+									onChange={(e) => setSearch(e.target.value)}
+									placeholder='Search titles, channels...'
+									className='px-2 mr-2 rounded border border-border bg-background text-zinc-300 '
+								/>
 							</div>
-							<input
-								type='text'
-								onChange={(e) => setSearch(e.target.value)}
-								placeholder='Search titles, channels...'
-								className='px-2 mr-2 rounded border border-border bg-background text-zinc-300 '
-							/>
-						</div>
+						)}
 					</section>
 				</main>
 			</div>

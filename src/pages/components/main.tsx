@@ -15,6 +15,7 @@ interface IMainProps {
 	isMoreConcepts: boolean;
 	setIsMoreConcepts: React.Dispatch<React.SetStateAction<boolean>>;
 	getYouTubeId: (url: string) => string | null;
+	children?: React.ReactNode;
 }
 
 const Main: React.FunctionComponent<IMainProps> = ({
@@ -26,9 +27,11 @@ const Main: React.FunctionComponent<IMainProps> = ({
 	isMoreConcepts,
 	setIsMoreConcepts,
 	getYouTubeId,
+	children,
 }) => {
 	return (
 		<>
+			{children}
 			<section
 				className={` grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 flex-1 min-h-0 overflow-y-auto scrollbar-none`}
 			>
@@ -56,10 +59,10 @@ const Main: React.FunctionComponent<IMainProps> = ({
 								/>
 							</div>
 							<div className='grow'>
-								<h2 className='mt-1 px-2 text-start rounded w-full h-auto line-clamp-2'>
+								<h2 className='mt-1 px-2 block text-center md:text-start rounded w-full h-auto line-clamp-2'>
 									{video.title}
 								</h2>
-								<span className=' ml-2 rounded text-xs text-zinc-400 w-auto h-auto'>
+								<span className=' ml-2 rounded  block text-center md:text-start  text-zinc-400 w-full h-auto'>
 									{video.channelName}
 								</span>
 							</div>

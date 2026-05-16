@@ -7,6 +7,9 @@ interface IAsideProps {
 	setSubcategory: React.Dispatch<React.SetStateAction<string[]>>;
 	setIsMoreConcepts: React.Dispatch<React.SetStateAction<boolean>>;
 	tagList: { tag: string; length: number }[];
+	setAsideOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	showComponent: boolean;
 }
 
 const Aside: React.FunctionComponent<IAsideProps> = ({
@@ -15,13 +18,21 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 	getSubcategory,
 	setSubcategory,
 	setIsMoreConcepts,
+	showComponent,
 	tagList,
+	setAsideOpen,
+	setFilterOpen,
 }) => {
 	return (
 		<aside className='relative rounded row-span-6 border-border border-2 min-h-0 overflow-hidden'>
 			<div className='flex absolute top-0 left-0 bg-background justify-center border-b-2 border-border w-full py-5 mb-10'>
 				<span
 					onClick={() => {
+						if (!showComponent) {
+							setAsideOpen(false);
+							setFilterOpen(false);
+						}
+
 						setTags('');
 						setSubcategory([]);
 					}}
@@ -37,6 +48,9 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 						<button
 							className={`${getTags === tag.tag ? 'bg-accent text-zinc-900' : ''} rounded hover:text-zinc-100 cursor-pointer flex justify-between w-full px-2 py-1 pb-1  hover:bg-zinc-900  text-zinc-400`}
 							onClick={() => {
+								if (!showComponent) {
+									setAsideOpen(false);
+								}
 								setTags(tag.tag);
 								setSubcategory([]);
 								setIsMoreConcepts(false);

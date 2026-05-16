@@ -5,6 +5,7 @@ import FilterIcon from '../../public/FilterIcon';
 import Aside from './components/aside';
 import Main from './components/main';
 import FilterComponent from './FilterComponent';
+import MobileFilter from './mobileFilterComponent';
 import Nav from './nav';
 
 function getYouTubeId(url: string): string | null {
@@ -101,7 +102,7 @@ export default function Home() {
 								tagList={tagList}
 							/>
 						) : filterOpen ? (
-							<FilterComponent
+							<MobileFilter
 								allVideos={allVideos}
 								getTags={getTags}
 								setTags={setTags}
@@ -151,17 +152,22 @@ export default function Home() {
 										onClick={() => {
 											if (!getTags) return;
 											setFilterOpen(!filterOpen);
+											setIsMoreConcepts(true);
 										}}
-										className={`${!getTags ? 'pointer-events-none ' : 'fill-accent cursor-pointer'} text-zinc-400  mx-2`}
+										className={`${!getTags ? 'pointer-events-none ' : 'fill-accent bg-zinc-[#283e52] cursor-pointer'} ${filterOpen ? 'fill-border-900 bg-accent ' : 'bg-[#283e52] '}   rounded size-6 mx-2`}
 									>
-										<FilterIcon width={16} height={16} className={` `} />
+										<FilterIcon
+											width={15}
+											height={15}
+											className={`translate-x-1 translate-y-1 `}
+										/>
 									</span>
 								</div>
 								<input
 									type='text'
 									onChange={(e) => setSearch(e.target.value)}
 									placeholder='Search titles, channels...'
-									className='px-2 mr-2 rounded border border-border bg-background text-zinc-300 '
+									className='px-2 mr-2 rounded border border-border bg-background text-zinc-300 outline-none py-1 '
 								/>
 							</div>
 						)}

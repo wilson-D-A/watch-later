@@ -10,6 +10,7 @@ root {
   --color-tools: #0e2c3b;
   --color-topics: #2c0e2c;
   --color-border: #1e2d3d;
+  --color-border-900: #24394e;
 }
 @theme inline {
   --color-background: var(--background);

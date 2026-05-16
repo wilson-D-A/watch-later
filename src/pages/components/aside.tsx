@@ -42,7 +42,7 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 			</div>
 			<ul className='overflow-y-scroll w-auto h-full mx-3 min-h-0 pt-20 scrollbar-none'>
 				<h2 className=' mb-2'>tags</h2>
-				{tagList.map((tag) => (
+				{tagList?.map((tag) => (
 					<li className=' ' key={tag.tag}>
 						<button
 							className={`${getTags === tag.tag ? 'bg-accent text-zinc-900' : ''} rounded hover:text-zinc-100 cursor-pointer flex justify-between w-full px-2 py-1 pb-1  hover:bg-zinc-900  text-zinc-400`}

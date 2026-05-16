@@ -50,7 +50,7 @@ const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 					</div>
 					<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2 '>
 						{isMoreConcepts &&
-							ConceptList.map((concept, index) => (
+							ConceptList?.map((concept, index) => (
 								<span
 									onClick={() => handleSubcategoryClick(concept)}
 									className={`${getSubcategory.includes(concept) ? 'bg-concept ring-[#aad97d] text-zinc-200' : 'ring-border'} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
@@ -65,8 +65,8 @@ const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 							<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2'>
 								<h2 className='text-sm text-zinc-400'>tools</h2>
 								{[
-									...new Set(allVideos.map((video) => video.subcategory[1])),
-								].map((tools, index) => (
+									...new Set(allVideos?.map((video) => video.subcategory[1])),
+								]?.map((tools, index) => (
 									<span
 										onClick={() => handleSubcategoryClick(tools)}
 										className={`${getSubcategory.includes(tools) ? ' bg-tools ring-[#5a97d6] text-zinc-200' : 'ring-border '} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}
@@ -79,8 +79,8 @@ const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 							<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2'>
 								<h2 className='text-sm text-zinc-400'>topics</h2>
 								{[
-									...new Set(allVideos.map((video) => video.subcategory[2])),
-								].map((topics, index) => (
+									...new Set(allVideos?.map((video) => video.subcategory[2])),
+								]?.map((topics, index) => (
 									<span
 										onClick={() => handleSubcategoryClick(topics)}
 										className={`${getSubcategory.includes(topics) ? ' bg-topics ring-[#b7a1ff] text-zinc-200' : 'ring-border '} cursor-pointer  ring-1 px-1 py-1 text-zinc-400 rounded  w-auto h-auto `}

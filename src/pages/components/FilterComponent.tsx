@@ -33,7 +33,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
 				<div className='grow sm:grow-0 rounded  border-border border-2 w-auto h-auto '>
 					<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2 '>
 						<h2>concept</h2>
-						{ConceptList.slice(0, isMoreConcepts ? ConceptList.length : 10).map(
+						{ConceptList?.slice(0, isMoreConcepts ? ConceptList.length : 10)?.map(
 							(concept, index) => (
 								<span
 									onClick={() => handleSubcategoryClick(concept)}
@@ -44,7 +44,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
 								</span>
 							),
 						)}
-						{ConceptList.length > 10 && (
+						{ConceptList?.length > 10 && (
 							<span
 								onClick={() => setIsMoreConcepts(!isMoreConcepts)}
 								className='cursor-pointer text-zinc-900 hover:bg-accent/50 hover:text-zinc-200 bg-accent ring-1 ring-border px-2 py-1 rounded'
@@ -55,7 +55,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
 					</div>
 					<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2'>
 						<h2>tools</h2>
-						{[...new Set(allVideos.map((video) => video.subcategory[1]))].map(
+						{[...new Set(allVideos?.map((video) => video.subcategory[1]))]?.map(
 							(tools, index) => (
 								<span
 									onClick={() => handleSubcategoryClick(tools)}
@@ -69,7 +69,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
 					</div>
 					<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2'>
 						<h2>topic</h2>
-						{[...new Set(allVideos.map((video) => video.subcategory[2]))].map(
+						{[...new Set(allVideos?.map((video) => video.subcategory[2]))]?.map(
 							(topics, index) => (
 								<span
 									onClick={() => handleSubcategoryClick(topics)}

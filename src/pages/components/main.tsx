@@ -31,14 +31,14 @@ const Main: React.FunctionComponent<IMainProps> = ({
 				className={` grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 flex-1 min-h-0 overflow-y-auto scrollbar-none`}
 			>
 				{allVideos
-					.filter((video) =>
+					?.filter((video) =>
 						getSubcategory.length > 0
 							? video.subcategory.some((subcategory) =>
 									getSubcategory.includes(subcategory),
 								)
 							: true,
 					)
-					.map((video) => (
+					?.map((video) => (
 						<button
 							key={video.index}
 							onClick={() => window.open(video.link, '_blank')}

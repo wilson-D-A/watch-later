@@ -31,7 +31,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
 	return (
 		<>
 			{getTags && (
-				<div className='grow sm:grow-0 rounded  border-border border-2 w-auto h-auto flex-1 min-h-0 overflow-y-auto scrollbar-none'>
+				<div className='grow sm:grow-0 rounded  border-border border-2 w-auto h-auto '>
 					<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2 '>
 						<h2>concept</h2>
 						{ConceptList.slice(0, isMoreConcepts ? ConceptList.length : 10).map(

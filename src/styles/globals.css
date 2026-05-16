@@ -28,14 +28,13 @@ root {
 @layer base {
   h1,
   h2,
-  h3,
-  input {
+  h3 {
     font-family: var(--font-sans);
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--color-zinc-300);
   }
-  span {
+  span, input {
     font-family: var(--font-mono);
     font-size: 0.65rem;
     font-weight: 400;

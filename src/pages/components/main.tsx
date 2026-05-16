@@ -28,7 +28,7 @@ const Main: React.FunctionComponent<IMainProps> = ({
 		<>
 			{children}
 			<section
-				className={` grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 flex-1 min-h-0 overflow-y-auto scrollbar-none`}
+				className={` grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 flex-1 min-h-0 overflow-y-auto overflow-x-clip scrollbar-none`}
 			>
 				{allVideos
 					?.filter((video) =>

@@ -3,10 +3,10 @@ import tags from '@/pages/api/watchlater_grouped.json';
 import { useEffect, useState } from 'react';
 import FilterIcon from '../../public/FilterIcon';
 import Aside from './components/aside';
+import FilterComponent from './components/FilterComponent';
 import Main from './components/main';
-import FilterComponent from './FilterComponent';
-import MobileFilter from './mobileFilterComponent';
-import Nav from './nav';
+import MobileFilter from './components/mobileFilterComponent';
+import Nav from './components/nav';
 
 function getYouTubeId(url: string): string | null {
 	const match = url.match(
@@ -15,7 +15,7 @@ function getYouTubeId(url: string): string | null {
 	return match ? match[1] : null;
 }
 
-export default function Home() {
+export default function WatchLater() {
 	const [getTags, setTags] = useState<string>('');
 	const [getSearch, setSearch] = useState<string>('');
 	const [asideOpen, setAsideOpen] = useState<boolean>(false);

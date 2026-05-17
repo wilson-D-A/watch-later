@@ -28,7 +28,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
 					type='text'
 					onChange={(e) => setSearch(e.target.value)}
 					placeholder='Search titles, channels...'
-					className='px-2 py-1 rounded border border-border bg-background text-zinc-300 '
+					className='px-2 py-1 outline-none rounded border border-border bg-background text-zinc-300 '
 				/>
 			)}
 		</nav>

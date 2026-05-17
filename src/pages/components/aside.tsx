@@ -24,7 +24,7 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 }) => {
 	return (
 		<aside className='relative rounded row-span-6 border-border border-2 min-h-0 overflow-hidden'>
-			<div className='flex absolute top-0 left-0 bg-background justify-center border-b-2 border-border w-full py-5 mb-10'>
+			<div className='flex absolute top-0 left-0 bg-background justify-center border-b-2 inset-shadow-sm border-border w-full py-5 mb-10'>
 				<span
 					onClick={() => {
 						if (!showComponent) {
@@ -35,7 +35,7 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 						setTags('');
 						setSubcategory([]);
 					}}
-					className={`cursor-pointer text-center px-1 md:px-5 py-1 text-zinc-400 rounded h-auto align-middle  ${getTags === '' ? 'bg-accent text-zinc-900' : 'bg-zinc-900'}`}
+					className={`cursor-pointer text-center px-1 md:px-5 py-1 text-zinc-300 rounded h-auto align-middle  ${getTags === '' ? ' inset-shadow-sm bg-accent text-zinc-900' : ' bg-border-900 text-zinc-300'}`}
 				>
 					all videos
 				</span>

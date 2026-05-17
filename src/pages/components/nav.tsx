@@ -19,7 +19,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
 		<nav className=' rounded col-span-full border-border bg-border/30 border-2 row-span-1 flex justify-center items-center sm:justify-between sm:px-5'>
 			<div className='flex flex-col sm:flex-row gap-3 items-center  '>
 				<h1 className='text-xl  font-black text-accent'>Watch Later</h1>
-				<span className=' text-center px-5 py-1 text-zinc-400 rounded h-auto align-middle bg-zinc-900'>
+				<span className=' text-center px-5 py-1 text-zinc-300 rounded h-auto align-middle bg-border-900'>
 					{allVideos?.length} videos
 				</span>
 			</div>

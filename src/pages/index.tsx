@@ -1,6 +1,5 @@
 import tags from '@/pages/api/watchlater_grouped.json';
 
-import type { Viewport } from 'next';
 import { useEffect, useMemo, useState } from 'react';
 import FilterIcon from '../../public/FilterIcon';
 import Aside from './components/aside';
@@ -16,12 +15,6 @@ function getYouTubeId(url: string): string | null {
 	return match ? match[1] : null;
 }
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1, // This prevents the auto-zoom
-  userScalable: false, // Optional: prevents manual pinch-to-zoom
-};
 type Video = {
   index: number;
   title: string;
@@ -185,7 +178,7 @@ export default function WatchLater() {
 											setFilterOpen(!filterOpen);
 											setIsMoreConcepts(true);
 										}}
-										className={`${!getTags ? 'pointer-events-none ' : 'fill-accent bg-zinc-[#283e52] cursor-pointer'} ${filterOpen ? 'fill-border-900 bg-accent ' : 'bg-[#283e52] '} ${searchOpen ? 'hidden ' : ''}  rounded size-6 mx-2`}
+										className={`${!getTags ? 'pointer-events-none ' : 'fill-accent bg-[#283e52] cursor-pointer'} ${filterOpen ? 'fill-border-900 bg-accent ' : 'bg-border-900 '} ${searchOpen ? 'hidden ' : ''}  rounded size-6 mx-2`}
 									>
 										<FilterIcon
 											width={15}

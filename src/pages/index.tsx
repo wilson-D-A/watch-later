@@ -1,5 +1,6 @@
 import tags from '@/pages/api/watchlater_grouped.json';
 
+import type { Viewport } from 'next';
 import { useEffect, useMemo, useState } from 'react';
 import FilterIcon from '../../public/FilterIcon';
 import Aside from './components/aside';
@@ -14,6 +15,13 @@ function getYouTubeId(url: string): string | null {
 	);
 	return match ? match[1] : null;
 }
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1, // This prevents the auto-zoom
+  userScalable: false, // Optional: prevents manual pinch-to-zoom
+};
 type Video = {
   index: number;
   title: string;

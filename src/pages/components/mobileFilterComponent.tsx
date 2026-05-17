@@ -35,13 +35,13 @@ const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 					<div className='flex  mx-5 my-2 justify-between '>
 						<h2
 							onClick={() => setIsMoreConcepts(true)}
-							className={`${isMoreConcepts ? 'bg-accent text-zinc-900' : 'bg-border-900 inset-shadow-sm text-zinc-300'} text-sm grow   cursor-pointer rounded-l-lg px-4 py-1 `}
+							className={`${isMoreConcepts ? 'bg-accent text-zinc-900' : 'bg-border-900 inset-shadow-zinc-900/60 inset-shadow-sm text-zinc-300'} text-sm grow   cursor-pointer rounded-l-lg px-4 py-1 `}
 						>
 							concepts
 						</h2>
 						<div
 							onClick={() => setIsMoreConcepts(false)}
-							className={`${!isMoreConcepts ? 'bg-accent *:text-zinc-900 ' : 'bg-border-900 inset-shadow-sm '} flex gap-5 p-1  rounded-r-lg  cursor-pointer  px-2 py-1  `}
+							className={`${!isMoreConcepts ? 'bg-accent *:text-zinc-900 ' : 'bg-border-900 inset-shadow-zinc-900/60 inset-shadow-sm'} flex gap-2 p-1  rounded-r-lg  cursor-pointer  px-5 py-1  `}
 						>
 							<h2 className='text-sm'>tools</h2>
 							<h2 className='text-sm'>&</h2>

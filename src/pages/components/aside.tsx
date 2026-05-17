@@ -35,7 +35,7 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 						setTags('');
 						setSubcategory([]);
 					}}
-					className={`cursor-pointer text-center px-1 md:px-5 py-1 text-zinc-300 rounded h-auto align-middle  ${getTags === '' ? ' inset-shadow-sm bg-accent text-zinc-900' : ' bg-border-900 text-zinc-300'}`}
+					className={`cursor-pointer text-center px-1 md:px-5 py-1 text-zinc-300 rounded h-auto align-middle  ${getTags === '' ? '  bg-accent text-zinc-900' : ' bg-border-900 text-zinc-300 inset-shadow-zinc-900/60 inset-shadow-sm'}`}
 				>
 					all videos
 				</span>

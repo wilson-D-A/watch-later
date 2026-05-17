@@ -14,6 +14,15 @@ function getYouTubeId(url: string): string | null {
 	);
 	return match ? match[1] : null;
 }
+type Video = {
+  index: number;
+  title: string;
+  link: string;
+  thumbnail: string;
+  ariaLabel: string;
+  channelName: string;
+  subcategory: string[];
+};
 
 export default function WatchLater() {
 	const [getTags, setTags] = useState<string>('');
@@ -55,20 +64,20 @@ export default function WatchLater() {
 	};
 
 
-	const allVideos = filteredTag
+	const allVideos: Video[] = filteredTag
 		.flatMap((group) => group.videos)
 		.filter(
 			(video) =>
 				video.title.toLowerCase().includes(search.toLowerCase()) ||
 				video.channelName.toLowerCase().includes(search.toLowerCase()),
 		);
-	const firstSuggestion = useMemo(() => {
-    if (!search) return "";
+	const firstSuggestion : Video | undefined = useMemo(() => {
+    if (!search) return undefined;
 
     return (
        filteredTag.flatMap((group) => group.videos).find((item) =>
         item.title.toLowerCase().startsWith(search.toLowerCase())
-      ) || ""
+      ) || undefined
     );
   }, [search]);
 

@@ -4,6 +4,7 @@ root {
   --background: #141416;
   --foreground: #f5f5f5;
 }
+
 @theme {
   --color-accent: #c8f564;
   --color-concept: #192c0e;
@@ -25,6 +26,7 @@ root {
     --foreground: #f5f5f5;
   }
 }
+
 @layer base {
   h1,
   h2,

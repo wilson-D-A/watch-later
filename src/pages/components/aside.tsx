@@ -24,7 +24,7 @@ const Aside: React.FunctionComponent<IAsideProps> = ({
 }) => {
 	return (
 		<aside className='relative rounded row-span-6 border-border border-2 min-h-0 overflow-hidden'>
-			<div className='flex absolute top-0 left-0 bg-background justify-center border-b-2 inset-shadow-sm border-border w-full py-5 mb-10'>
+			<div className='flex absolute top-0 left-0 bg-[#010c15] justify-center border-b-2 inset-shadow-sm border-border w-full py-5 mb-10'>
 				<span
 					onClick={() => {
 						if (!showComponent) {

@@ -41,7 +41,7 @@ const Main: React.FunctionComponent<IMainProps> = ({
 					?.map((video) => (
 						<button
 							key={video.index}
-							onClick={() => window.open(video.link, '_blank')}
+							onClick={() => window.open(video.link, '_blank')}	
 							className='cursor-pointer flex flex-col justify-between  rounded border-border bg-border/50 border-2 min-w-60 h-72 '
 						>
 							<div className='relative w-full h-40 mb-2'>

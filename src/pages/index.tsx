@@ -89,7 +89,7 @@ export default function WatchLater() {
 	].toSorted((a, b) => a.localeCompare(b));
 
 	return (
-		<div className='h-screen w-screen p-4'>
+		<div className='h-screen w-screen p-4 bg-[#010c15]'>
 			<div className=' grid grid-cols-5 grid-rows-7  gap-4 h-full '>
 				<Nav
 					showComponent={showComponent}
@@ -164,7 +164,7 @@ export default function WatchLater() {
 							</Main>
 						)}
 						{!showComponent && (
-							<div className='rounded border-border border-2 w-auto h-15 flex justify-between items-center'>
+							<div className='rounded  border-border border-2 w-auto h-15 flex justify-between items-center'>
 								<div className='flex items-center'>
 									<span
 										onClick={() => setAsideOpen(!asideOpen)}

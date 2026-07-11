@@ -6,6 +6,7 @@ root {
 }
 
 @theme {
+  --color-bg: #141416;
   --color-accent: #c8f564;
   --color-concept: #192c0e;
   --color-tools: #0e2c3b;

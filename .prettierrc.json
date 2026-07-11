@@ -1,6 +1,0 @@
-{
-  "plugins": ["prettier-plugin-tailwindcss"],
-   "singleAttributePerLine": true,
-   "tailwindConfig": "./tailwind.config.js",
-  "bracketSameLine": true
-}

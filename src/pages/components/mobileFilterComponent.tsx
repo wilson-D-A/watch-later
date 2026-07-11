@@ -1,13 +1,8 @@
 import * as React from 'react';
+import type { Video } from '../index';
 
 interface IMobileFilterProps {
-	allVideos: {
-		index: number;
-		title: string;
-		channelName: string;
-		link: string;
-		subcategory: string[];
-	}[];
+	allVideos: Video[];
 	getTags: string;
 	setTags: React.Dispatch<React.SetStateAction<string>>;
 	handleSubcategoryClick: (subcategory: string) => void;
@@ -21,7 +16,7 @@ interface IMobileFilterProps {
 const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 	allVideos,
 	getTags,
-	setTags,
+
 	getSubcategory,
 	handleSubcategoryClick,
 	setIsMoreConcepts,
@@ -65,7 +60,7 @@ const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 							<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2'>
 								<h2 className='text-sm text-zinc-400'>tools</h2>
 								{[
-									...new Set(allVideos?.map((video) => video.subcategory[1])),
+									...new Set(allVideos?.map((video) => video.tag[1])),
 								]?.map((tools, index) => (
 									<span
 										onClick={() => handleSubcategoryClick(tools)}
@@ -79,7 +74,7 @@ const MobileFilter: React.FunctionComponent<IMobileFilterProps> = ({
 							<div className='flex flex-col sm:flex-row sm:flex-wrap gap-2 mx-2 my-2'>
 								<h2 className='text-sm text-zinc-400'>topics</h2>
 								{[
-									...new Set(allVideos?.map((video) => video.subcategory[2])),
+									...new Set(allVideos?.map((video) => video.tag[2])),
 								]?.map((topics, index) => (
 									<span
 										onClick={() => handleSubcategoryClick(topics)}

@@ -1,13 +1,8 @@
 import * as React from 'react';
+import type { Video } from '../index';
 
 interface INavProps {
-	allVideos: {
-		index: number;
-		title: string;
-		channelName: string;
-		link: string;
-		subcategory: string[];
-	}[];
+	allVideos:Video[];
 	getSearch: string;
 	setSearch: React.Dispatch<React.SetStateAction<string>>;
 	showComponent: boolean;

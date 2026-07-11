@@ -1,19 +1,13 @@
 import Image from 'next/image';
 import * as React from 'react';
+import type { Video } from '../index';
 interface IMainProps {
 	getTags: string;
 	getSubcategory: string[];
 	handleSubcategoryClick: (subcategory: string) => void;
-	allVideos: {
-		index: number;
-		title: string;
-		channelName: string;
-		link: string;
-		subcategory: string[];
-	}[];
+	allVideos: Video[];
 	ConceptList: string[];
-	isMoreConcepts: boolean;
-	setIsMoreConcepts: React.Dispatch<React.SetStateAction<boolean>>;
+
 	getYouTubeId: (url: string) => string | null;
 	children?: React.ReactNode;
 }
@@ -33,20 +27,20 @@ const Main: React.FunctionComponent<IMainProps> = ({
 				{allVideos
 					?.filter((video) =>
 						getSubcategory.length > 0
-							? video.subcategory.some((subcategory) =>
+							? video.tag.some((subcategory) =>
 									getSubcategory.includes(subcategory),
 								)
 							: true,
 					)
 					?.map((video) => (
 						<button
-							key={video.index}
-							onClick={() => window.open(video.link, '_blank')}	
+							key={video.id}
+							onClick={() => window.open(video.url, '_blank')}
 							className='cursor-pointer flex flex-col justify-between  rounded border-border bg-border/50 border-2 min-w-60 h-72 '
 						>
 							<div className='relative w-full h-40 mb-2'>
 								<Image
-									src={`https://i.ytimg.com/vi/${getYouTubeId(video.link)}/mqdefault.jpg`}
+									src={`https://i.ytimg.com/vi/${getYouTubeId(video.url)}/mqdefault.jpg`}
 									alt={video.title}
 									fill
 									sizes='(max-width: 768px) 100vw, 300px'
@@ -63,13 +57,13 @@ const Main: React.FunctionComponent<IMainProps> = ({
 							</div>
 							<div className='mx-2 mb-2 rounded  text-xs w-auto flex flex-wrap gap-2 '>
 								<span className='ring-[#aad97d] ring-1 px-1 text-zinc-400 rounded bg-concept w-auto h-auto '>
-									{video.subcategory[0]}
+									{video.tag[0]}
 								</span>
 								<span className='ring-[#5a97d6] ring-1 px-1 rounded text-zinc-400 bg-tools w-auto h-auto'>
-									{video.subcategory[1]}
+									{video.tag[1]}
 								</span>
 								<span className='ring-[#b7a1ff] ring-1 px-1  rounded text-zinc-400 bg-topics w-auto h-auto'>
-									{video.subcategory[2]}
+									{video.tag[2]}
 								</span>
 							</div>
 						</button>

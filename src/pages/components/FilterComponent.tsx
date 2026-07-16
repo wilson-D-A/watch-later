@@ -50,15 +50,15 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
     ? ConceptList
     : ConceptList?.slice(0, collapsedCount);
 
-  const tools = [...new Set(allVideos?.map((video) => video.tag[1]))].sort(
-    (a, b) => a.localeCompare(b),
-  );
+  const tools = [
+    ...new Set(allVideos?.map((video) => video.tags[1].name)),
+  ].sort((a, b) => a.localeCompare(b));
   const visibleTools = isMoreTools
     ? tools
     : tools?.slice(0, collapsedCount + 3);
-  const topics = [...new Set(allVideos?.map((video) => video.tag[2]))].sort(
-    (a, b) => a.localeCompare(b),
-  );
+  const topics = [
+    ...new Set(allVideos?.map((video) => video.tags[2].name)),
+  ].sort((a, b) => a.localeCompare(b));
   const visibleTopics = isMoreTopics
     ? topics
     : topics?.slice(0, collapsedCount + 3);

@@ -1,5 +1,4 @@
-import videos from "@/pages/api/watchlater_grouped.json";
-
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import FilterIcon from "../../public/FilterIcon";
 import Aside from "./components/aside";
@@ -7,6 +6,7 @@ import FilterComponent from "./components/FilterComponent";
 import Main from "./components/main";
 import MobileFilter from "./components/mobileFilterComponent";
 import Nav from "./components/nav";
+import { getVideos } from "./routes";
 
 function getYouTubeId(url: string): string | null {
   const match = url.match(
@@ -22,7 +22,7 @@ export type Video = {
   videoLength: string;
   channelName: string;
   category: string;
-  tag: string[];
+  tags: { name: string }[];
 };
 
 export default function WatchLater() {
@@ -36,6 +36,9 @@ export default function WatchLater() {
   const [isMoreTools, setIsMoreTools] = useState<boolean>(false);
   const [isMoreTopics, setIsMoreTopics] = useState<boolean>(false);
   const [showComponent, setShowComponent] = useState<boolean>(false);
+
+  const query = useQuery({ queryKey: ["videos"], queryFn: getVideos });
+
   useEffect(() => {
     const handleResize = () => {
       setShowComponent(window.innerWidth >= 640);
@@ -50,13 +53,16 @@ export default function WatchLater() {
   }, []);
 
   const categoryCounts: Record<string, number> = {};
-  videos.forEach((item) => {
-    categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
-  });
+  if (Array.isArray(query.data)) {
+    query.data.forEach((item: Video) => {
+      categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
+    });
+  }
 
-  const filteredTag = videos.filter(
-    (video) => getCategory === "" || video.category === getCategory,
-  );
+  const filteredTag =
+    query.data?.filter(
+      (video: Video) => getCategory === "" || video.category === getCategory,
+    ) || [];
   const handleSubcategoryClick = (subcategory: string) => {
     if (getTag.includes(subcategory)) {
       setTag(getTag.filter((sub) => sub !== subcategory));
@@ -65,24 +71,25 @@ export default function WatchLater() {
     }
   };
 
-  const allVideos: Video[] = filteredTag.filter(
-    (video) =>
-      video.title.toLowerCase().includes(search.toLowerCase()) ||
-      video.channelName.toLowerCase().includes(search.toLowerCase()),
-  );
-  console.log("allVideos", allVideos);
+  const allVideos: Video[] =
+    filteredTag.filter(
+      (video: Video) =>
+        video.title.toLowerCase().includes(search.toLowerCase()) ||
+        video.channelName.toLowerCase().includes(search.toLowerCase()),
+    ) || [];
+
   const firstSuggestion: Video | undefined = useMemo(() => {
     if (!search) return undefined;
 
     return (
-      filteredTag.find((item) =>
+      filteredTag.find((item: Video) =>
         item.title.toLowerCase().startsWith(search.toLowerCase()),
       ) || undefined
     );
   }, [search]);
 
   const ConceptList = [
-    ...new Set(allVideos.map((video) => video.tag[0])),
+    ...new Set(allVideos.map((video) => video.tags[0].name)),
   ].toSorted((a, b) => a.localeCompare(b));
 
   return (

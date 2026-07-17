@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import FilterIcon from "../../public/FilterIcon";
+import { getVideos } from "./api/getVideos";
 import Aside from "./components/aside";
 import FilterComponent from "./components/FilterComponent";
 import Main from "./components/main";
 import MobileFilter from "./components/mobileFilterComponent";
 import Nav from "./components/nav";
-import { getVideos } from "./routes";
 
 function getYouTubeId(url: string): string | null {
   const match = url.match(
@@ -93,7 +93,7 @@ export default function WatchLater() {
   ].toSorted((a, b) => a.localeCompare(b));
 
   return (
-    <div className="h-screen w-screen bg-[#010c15] p-4">
+    <div className="relative h-screen w-screen bg-[#010c15] p-4">
       <div className="grid h-full grid-cols-5 grid-rows-7 gap-4">
         <Nav
           showComponent={showComponent}

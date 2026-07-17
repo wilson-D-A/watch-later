@@ -1,19 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import FilterIcon from "../../public/FilterIcon";
-import { getVideos } from "./api/getVideos";
 import Aside from "./components/aside";
 import FilterComponent from "./components/FilterComponent";
 import Main from "./components/main";
 import MobileFilter from "./components/mobileFilterComponent";
 import Nav from "./components/nav";
-
-function getYouTubeId(url: string): string | null {
-  const match = url.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-  );
-  return match ? match[1] : null;
-}
+import ViewCards from "./components/ViewCards";
+import { VideoDetails, getYouTubeId } from "./hooks/videoDetails";
 
 export type Video = {
   id: number;
@@ -37,7 +30,14 @@ export default function WatchLater() {
   const [isMoreTopics, setIsMoreTopics] = useState<boolean>(false);
   const [showComponent, setShowComponent] = useState<boolean>(false);
 
-  const query = useQuery({ queryKey: ["videos"], queryFn: getVideos });
+  const {
+    filteredVideos,
+    filteredTag,
+    allVideos,
+    firstSuggestion,
+    ConceptList,
+    categoryCounts,
+  } = VideoDetails(getCategory, search, getTag);
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,17 +52,6 @@ export default function WatchLater() {
     };
   }, []);
 
-  const categoryCounts: Record<string, number> = {};
-  if (Array.isArray(query.data)) {
-    query.data.forEach((item: Video) => {
-      categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
-    });
-  }
-
-  const filteredTag =
-    query.data?.filter(
-      (video: Video) => getCategory === "" || video.category === getCategory,
-    ) || [];
   const handleSubcategoryClick = (subcategory: string) => {
     if (getTag.includes(subcategory)) {
       setTag(getTag.filter((sub) => sub !== subcategory));
@@ -70,27 +59,6 @@ export default function WatchLater() {
       setTag([...getTag, subcategory]);
     }
   };
-
-  const allVideos: Video[] =
-    filteredTag.filter(
-      (video: Video) =>
-        video.title.toLowerCase().includes(search.toLowerCase()) ||
-        video.channelName.toLowerCase().includes(search.toLowerCase()),
-    ) || [];
-
-  const firstSuggestion: Video | undefined = useMemo(() => {
-    if (!search) return undefined;
-
-    return (
-      filteredTag.find((item: Video) =>
-        item.title.toLowerCase().startsWith(search.toLowerCase()),
-      ) || undefined
-    );
-  }, [search]);
-
-  const ConceptList = [
-    ...new Set(allVideos.map((video) => video.tags[0].name)),
-  ].toSorted((a, b) => a.localeCompare(b));
 
   return (
     <div className="relative h-screen w-screen bg-[#010c15] p-4">
@@ -143,22 +111,13 @@ export default function WatchLater() {
                 isMoreConcepts={isMoreConcepts}
               />
             ) : (
-              <Main
-                getTags={getCategory}
-                getSubcategory={getTag}
-                handleSubcategoryClick={handleSubcategoryClick}
-                allVideos={allVideos}
-                ConceptList={ConceptList}
-                getYouTubeId={getYouTubeId}
-              >
+              <Main>
                 {showComponent && (
                   <FilterComponent
                     allVideos={allVideos}
                     getTags={getCategory}
                     setTags={setCategory}
                     handleSubcategoryClick={handleSubcategoryClick}
-                    getSubcategory={getTag}
-                    setSubcategory={setTag}
                     setIsMoreConcepts={setIsMoreConcepts}
                     ConceptList={ConceptList.sort((a, b) => a.localeCompare(b))}
                     isMoreConcepts={isMoreConcepts}
@@ -168,6 +127,24 @@ export default function WatchLater() {
                     isMoreTopics={isMoreTopics}
                   />
                 )}
+
+                <section
+                  className={`grid min-h-0 flex-1 scrollbar-none grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 overflow-x-clip overflow-y-auto`}
+                >
+                  {filteredVideos.map((video) => (
+                    <ViewCards
+                      key={video.id}
+                      id={video.id}
+                      url={video.url}
+                      title={video.title}
+                      channelName={video.channelName}
+                      concept={video.tags[0].name}
+                      tools={video.tags[1].name}
+                      topics={video.tags[2].name}
+                      getYouTubeId={getYouTubeId}
+                    />
+                  ))}
+                </section>
               </Main>
             )}
             {!showComponent && (

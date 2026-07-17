@@ -6,8 +6,7 @@ interface IFilterProps {
   getTags: string;
   setTags: React.Dispatch<React.SetStateAction<string>>;
   handleSubcategoryClick: (subcategory: string) => void;
-  getSubcategory: string[];
-  setSubcategory: React.Dispatch<React.SetStateAction<string[]>>;
+
   setIsMoreConcepts: React.Dispatch<React.SetStateAction<boolean>>;
   setIsMoreTools: React.Dispatch<React.SetStateAction<boolean>>;
   setIsMoreTopics: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +19,6 @@ interface IFilterProps {
 const Filter: React.FunctionComponent<IFilterProps> = ({
   allVideos,
   getTags,
-  getSubcategory,
   handleSubcategoryClick,
   setIsMoreConcepts,
   ConceptList,
@@ -62,7 +60,6 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
   const visibleTopics = isMoreTopics
     ? topics
     : topics?.slice(0, collapsedCount + 3);
-  console.log("visibleConcepts", visibleTopics);
   return (
     <>
       {getTags && (
@@ -74,7 +71,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
             {visibleConcepts?.map((concept, index) => (
               <span
                 onClick={() => handleSubcategoryClick(concept)}
-                className={`${getSubcategory.includes(concept) ? "bg-concept text-zinc-200 inset-ring-[#aad97d]" : "inset-ring-border"} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 inset-ring-1`}
+                className={`${getTags.includes(concept) ? "bg-concept text-zinc-200 inset-ring-[#aad97d]" : "inset-ring-border"} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 inset-ring-1`}
                 key={index}
               >
                 {concept}
@@ -95,7 +92,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
             {visibleTools?.map((tools, index) => (
               <span
                 onClick={() => handleSubcategoryClick(tools)}
-                className={`${getSubcategory.includes(tools) ? "bg-tools text-zinc-200 ring-[#5a97d6]" : "ring-border"} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 ring-1`}
+                className={`${getTags.includes(tools) ? "bg-tools text-zinc-200 ring-[#5a97d6]" : "ring-border"} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 ring-1`}
                 key={index}
               >
                 {tools}
@@ -117,7 +114,7 @@ const Filter: React.FunctionComponent<IFilterProps> = ({
             {visibleTopics?.map((topics, index) => (
               <span
                 onClick={() => handleSubcategoryClick(topics)}
-                className={`${getSubcategory.includes(topics) ? "bg-topics text-zinc-200 ring-[#b7a1ff]" : "ring-border"} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 ring-1`}
+                className={`${getTags.includes(topics) ? "bg-topics text-zinc-200 ring-[#b7a1ff]" : "ring-border"} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 ring-1`}
                 key={index}
               >
                 {topics}

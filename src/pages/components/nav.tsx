@@ -3,13 +3,14 @@ import type { Video } from "../index";
 
 interface INavProps {
   allVideos: Video[];
-  getSearch: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  showComponent: boolean;
+  videoLength: string;
+  setSearch: (value: string) => void;
+
+  showComponent: boolean | undefined;
 }
 
 const Nav: React.FunctionComponent<INavProps> = (props) => {
-  const { allVideos, getSearch, setSearch, showComponent } = props;
+  const { showComponent, allVideos, setSearch } = props;
 
   return (
     <nav className="border-border bg-border/30 col-span-full row-span-1 flex items-center justify-center rounded border-2 sm:justify-between sm:px-5">
@@ -22,7 +23,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
       {showComponent && (
         <input
           type="text"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.currentTarget.value)}
           placeholder="Search titles, channels..."
           className="border-border bg-background w-60 rounded border px-2 py-1 text-zinc-300 outline-none"
         />

@@ -1,11 +1,11 @@
 interface ITagFilterButtonProps {
-  isMoreTools: boolean;
+  isMore: boolean;
   onToggle: () => void;
   classNames?: { active?: string; inactive?: string };
 }
 
 function TagFilterButton({
-  isMoreTools,
+  isMore,
   onToggle,
   classNames = {},
 }: ITagFilterButtonProps) {
@@ -13,9 +13,9 @@ function TagFilterButton({
   return (
     <span
       onClick={() => onToggle()}
-      className={`${isMoreTools ? active : inactive} ml-2 cursor-pointer rounded px-2 py-1 text-zinc-400 ring-1 hover:text-zinc-200`}
+      className={`${isMore ? `${active} text-zinc-200 inset-ring-1` : `${inactive} text-zinc-900`} ml-2 cursor-pointer rounded px-2 py-1 hover:text-zinc-200`}
     >
-      {isMoreTools ? "less" : "more"}
+      {isMore ? "less" : "more"}
     </span>
   );
 }

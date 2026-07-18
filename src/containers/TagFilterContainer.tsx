@@ -50,25 +50,40 @@ function TagFilterContainer() {
         <div className="border-border h-auto w-auto grow rounded border-2 pb-2 sm:grow-0">
           <TagFilterSection
             title="Concept"
-            color="concept"
+            classNames={{
+              active: "bg-concept text-zinc-200 inset-ring-[#aad97d]",
+              inactive: "inset-ring-border",
+              background: "bg-[#aad97d]",
+            }}
+            isMore={isMoreConcepts}
             items={concepts}
-            selected={getCategory}
+            selected={getTag}
             onClick={handleSubcategoryClick}
             onToggle={() => setIsMoreConcepts(!isMoreConcepts)}
           />
           <TagFilterSection
             title="Tools"
-            color="tools"
+            classNames={{
+              active: "bg-tools text-zinc-200 inset-ring-[#5a97d6]",
+              inactive: "inset-ring-border",
+              background: "bg-[#5a97d6]",
+            }}
+            isMore={isMoreTools}
             items={tools}
-            selected={getCategory}
+            selected={getTag}
             onClick={handleSubcategoryClick}
             onToggle={() => setIsMoreTools(!isMoreTools)}
           />
           <TagFilterSection
             title="Topics"
-            color="topics"
+            classNames={{
+              active: "bg-topics text-zinc-200 inset-ring-[#b7a1ff]",
+              inactive: "inset-ring-border",
+              background: "bg-[#b7a1ff]",
+            }}
+            isMore={isMoreTopics}
             items={topics}
-            selected={getCategory}
+            selected={getTag}
             onClick={handleSubcategoryClick}
             onToggle={() => setIsMoreTopics(!isMoreTopics)}
           />

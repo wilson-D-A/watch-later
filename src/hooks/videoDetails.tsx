@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useFilterController } from "../containers/FilterController";
 import { useTagController } from "../containers/TagController";
-import type { Video } from "../index";
+import type { Video } from "../pages/index";
 import useVideos from "./useVideos";
 
 function useVideoDetails() {

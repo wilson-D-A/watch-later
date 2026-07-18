@@ -1,4 +1,4 @@
-import FilterIcon from "../../../public/FilterIcon";
+import FilterIcon from "../../public/FilterIcon";
 import { useFilterController } from "../containers/FilterController";
 import { useTagController } from "../containers/TagController";
 import { useVideoDetails } from "../hooks/videoDetails";

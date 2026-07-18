@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Video } from "../index";
+import type { Video } from "../pages/index";
 
 interface IFilterProps {
   allVideos: Video[];

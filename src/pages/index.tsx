@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import FilterComponent from "./components/FilterComponent";
-import Main from "./components/main";
-import MobileFilter from "./components/mobileFilterComponent";
-import Search from "./components/search";
-import ViewCards from "./components/ViewCards";
-import AsideContainer from "./containers/AsideContainer";
-import { useFilterController } from "./containers/FilterController";
-import NavContainer from "./containers/NavContainer";
-import { useTagController } from "./containers/TagController";
-import { getYouTubeId, useVideoDetails } from "./hooks/videoDetails";
+import MobileFilter from "../components/mobileFilterComponent";
+import Search from "../components/search";
+import ViewCards from "../components/ViewCards";
+import AsideContainer from "../containers/AsideContainer";
+import { useFilterController } from "../containers/FilterController";
+import NavContainer from "../containers/NavContainer";
+import { useTagController } from "../containers/TagController";
+import TagFilterContainer from "../containers/TagFilterContainer";
+import { getYouTubeId, useVideoDetails } from "../hooks/videoDetails";
 export type Video = {
   id: number;
   title: string;
@@ -37,7 +36,6 @@ export default function WatchLater() {
     setIsMoreTools,
     isMoreTopics,
     setIsMoreTopics,
-    handleSubcategoryClick,
   } = useTagController();
   const [showComponent, setShowComponent] = useState<boolean>(false);
 
@@ -56,6 +54,14 @@ export default function WatchLater() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleSubcategoryClick = (subcategory: string) => {
+    if (getTag.includes(subcategory)) {
+      setTag(getTag.filter((sub) => sub !== subcategory));
+    } else {
+      setTag([...getTag, subcategory]);
+    }
+  };
 
   return (
     <div className="relative h-screen w-screen bg-[#010c15] p-4">
@@ -80,23 +86,8 @@ export default function WatchLater() {
                 isMoreConcepts={isMoreConcepts}
               />
             ) : (
-              <Main>
-                {showComponent && (
-                  <FilterComponent
-                    allVideos={allVideos}
-                    getTags={getCategory}
-                    setTags={setCategory}
-                    handleSubcategoryClick={handleSubcategoryClick}
-                    setIsMoreConcepts={setIsMoreConcepts}
-                    ConceptList={ConceptList.sort((a, b) => a.localeCompare(b))}
-                    isMoreConcepts={isMoreConcepts}
-                    setIsMoreTools={setIsMoreTools}
-                    isMoreTools={isMoreTools}
-                    setIsMoreTopics={setIsMoreTopics}
-                    isMoreTopics={isMoreTopics}
-                  />
-                )}
-
+              <>
+                {showComponent && <TagFilterContainer />}
                 <section
                   className={`grid min-h-0 flex-1 scrollbar-none grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 overflow-x-clip overflow-y-auto`}
                 >
@@ -114,7 +105,7 @@ export default function WatchLater() {
                     />
                   ))}
                 </section>
-              </Main>
+              </>
             )}
             {!showComponent && <Search />}
           </section>

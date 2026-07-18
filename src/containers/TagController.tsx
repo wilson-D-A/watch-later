@@ -9,7 +9,6 @@ interface TagContextType {
   setIsMoreTools: React.Dispatch<React.SetStateAction<boolean>>;
   isMoreTopics: boolean;
   setIsMoreTopics: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSubcategoryClick: (subcategory: string) => void;
 }
 
 const TagContext = createContext<TagContextType | undefined>(undefined);
@@ -19,14 +18,6 @@ function TagProvider({ children }: { children: React.ReactNode }) {
   const [isMoreConcepts, setIsMoreConcepts] = useState<boolean>(false);
   const [isMoreTools, setIsMoreTools] = useState<boolean>(false);
   const [isMoreTopics, setIsMoreTopics] = useState<boolean>(false);
-
-  const handleSubcategoryClick = (subcategory: string) => {
-    if (getTag.includes(subcategory)) {
-      setTag(getTag.filter((sub) => sub !== subcategory));
-    } else {
-      setTag([...getTag, subcategory]);
-    }
-  };
 
   return (
     <TagContext.Provider
@@ -39,7 +30,6 @@ function TagProvider({ children }: { children: React.ReactNode }) {
         setIsMoreTools,
         isMoreTopics,
         setIsMoreTopics,
-        handleSubcategoryClick,
       }}
     >
       {children}

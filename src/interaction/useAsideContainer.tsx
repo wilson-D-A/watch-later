@@ -1,13 +1,14 @@
-import Aside from "../components/aside";
-import ListCategories from "../components/ListCategories";
-import { useVideoDetails } from "../hooks/videoDetails";
-import { useFilterController } from "./FilterController";
-import { useTagController } from "./TagController";
+import { useFilterController } from "../hooks/controllers/useFilterController";
+import { useTagController } from "../hooks/controllers/useTagController";
+import { useVideoDetails } from "../hooks/logic/videoDetails";
+import Aside from "../presentation/aside/aside";
+import ListCategories from "../presentation/aside/ListCategories";
 function AsideContainer({ showComponent }: { showComponent: boolean }) {
   const { categoryCounts } = useVideoDetails();
   const { getCategory, setCategory, setAsideOpen, setFilterOpen } =
     useFilterController();
-  const { setTag, setIsMoreConcepts } = useTagController();
+  const { setTag, setIsMoreConcepts, setIsMoreTopics, setIsMoreTools } =
+    useTagController();
 
   function handleCategoryClick(category: string) {
     if (!showComponent) {
@@ -17,6 +18,8 @@ function AsideContainer({ showComponent }: { showComponent: boolean }) {
     setCategory(category);
     setTag([]);
     setIsMoreConcepts(false);
+    setIsMoreTopics(false);
+    setIsMoreTools(false);
   }
 
   function handleAsideClick() {

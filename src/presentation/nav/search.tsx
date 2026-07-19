@@ -1,7 +1,7 @@
-import FilterIcon from "../../public/FilterIcon";
-import { useFilterController } from "../containers/FilterController";
-import { useTagController } from "../containers/TagController";
-import { useVideoDetails } from "../hooks/videoDetails";
+import { useFilterController } from "@/hooks/controllers/useFilterController";
+import { useTagController } from "@/hooks/controllers/useTagController";
+import { useVideoDetails } from "@/hooks/logic/videoDetails";
+import FilterIcon from "../../../public/FilterIcon";
 function Search() {
   const { firstSuggestion } = useVideoDetails();
   const {

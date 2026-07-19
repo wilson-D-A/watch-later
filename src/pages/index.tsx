@@ -1,13 +1,13 @@
+import MobileFilter from "@/presentation/tagFilter/mobileFilterComponent";
 import { useEffect, useState } from "react";
-import MobileFilter from "../components/mobileFilterComponent";
-import Search from "../components/search";
-import ViewCards from "../components/ViewCards";
-import AsideContainer from "../containers/AsideContainer";
-import { useFilterController } from "../containers/FilterController";
-import NavContainer from "../containers/NavContainer";
-import { useTagController } from "../containers/TagController";
-import TagFilterContainer from "../containers/TagFilterContainer";
-import { getYouTubeId, useVideoDetails } from "../hooks/videoDetails";
+import { useFilterController } from "../hooks/controllers/useFilterController";
+import { useTagController } from "../hooks/controllers/useTagController";
+import { getYouTubeId, useVideoDetails } from "../hooks/logic/videoDetails";
+import AsideContainer from "../interaction/useAsideContainer";
+import NavContainer from "../interaction/useNavContainer";
+import TagFilterContainer from "../interaction/useTagFilterContainer";
+import ViewCards from "../presentation/main/ViewCards";
+import Search from "../presentation/nav/search";
 export type Video = {
   id: number;
   title: string;

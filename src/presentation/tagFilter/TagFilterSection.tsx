@@ -1,5 +1,5 @@
 import React from "react";
-import TagFilterButton from "../components/TagFilterButton";
+import TagFilterButton from "./TagFilterButton";
 interface ITagFilterSectionProps {
   title: string;
   classNames: { active?: string; inactive?: string; background?: string };

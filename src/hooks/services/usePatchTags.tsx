@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { patchTags } from "../api/getVideos";
+import { patchTags } from "../../data/getVideos";
 
 function patchTag() {
   return useMutation({

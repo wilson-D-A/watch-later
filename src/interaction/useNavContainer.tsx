@@ -1,6 +1,6 @@
-import Nav from "../components/nav";
-import { useVideoDetails } from "../hooks/videoDetails";
-import { useFilterController } from "./FilterController";
+import { useFilterController } from "../hooks/controllers/useFilterController";
+import { useVideoDetails } from "../hooks/logic/videoDetails";
+import Nav from "../presentation/nav/nav";
 function NavContainer({ showComponent }: { showComponent: boolean }) {
   const { allVideos } = useVideoDetails();
   const { setSearch } = useFilterController();

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { useFilterController } from "../containers/FilterController";
-import { useTagController } from "../containers/TagController";
-import type { Video } from "../pages/index";
-import useVideos from "./useVideos";
+import type { Video } from "../../pages/index";
+import { useFilterController } from "../controllers/useFilterController";
+import { useTagController } from "../controllers/useTagController";
+import useVideos from "../services/useGetVideos";
 
 function useVideoDetails() {
   const { getTag } = useTagController();

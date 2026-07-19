@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import patchTag from "../hooks/patchTag";
+import patchTag from "../hooks/services/usePatchTags";
 interface IMainProps {
   children?: React.ReactNode;
 }

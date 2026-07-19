@@ -1,9 +1,9 @@
-import { useVideoDetails } from "../hooks/videoDetails";
-import { useCollapsedCount } from "../tagFilter/hooks/UseCollapsedCount";
-import TagFilterSection from "../tagFilter/TagFilterSection";
-import { getUniqueTags, getVisibleTags } from "../tagFilter/utils/tag.utils";
-import { useFilterController } from "./FilterController";
-import { useTagController } from "./TagController";
+import { getUniqueTags, getVisibleTags } from "@/hooks/logic/tag.utils";
+import { useFilterController } from "../hooks/controllers/useFilterController";
+import { useTagController } from "../hooks/controllers/useTagController";
+import { useCollapsedCount } from "../hooks/logic/UseCollapsedCount";
+import { useVideoDetails } from "../hooks/logic/videoDetails";
+import TagFilterSection from "../presentation/tagFilter/TagFilterSection";
 
 function TagFilterContainer() {
   const { allVideos, ConceptList } = useVideoDetails();

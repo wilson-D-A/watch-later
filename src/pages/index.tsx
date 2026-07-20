@@ -1,11 +1,10 @@
-import MobileFilter from "@/presentation/tagFilter/mobileFilterComponent";
 import { useEffect, useState } from "react";
 import { useFilterController } from "../hooks/controllers/useFilterController";
 import { useTagController } from "../hooks/controllers/useTagController";
 import { getYouTubeId, useVideoDetails } from "../hooks/logic/videoDetails";
+import TagFilterContainer from "../interaction/TagFilterContainer";
 import AsideContainer from "../interaction/useAsideContainer";
 import NavContainer from "../interaction/useNavContainer";
-import TagFilterContainer from "../interaction/useTagFilterContainer";
 import ViewCards from "../presentation/main/ViewCards";
 import Search from "../presentation/nav/search";
 export type Video = {
@@ -70,21 +69,11 @@ export default function WatchLater() {
 
         {showComponent && <AsideContainer showComponent={showComponent} />}
         <main className="col-span-full row-span-6 h-full min-h-0 overflow-hidden rounded sm:col-span-4">
-          <section className="flex h-full min-h-0 flex-col gap-4">
+          <section className="flex h-full min-h-0 flex-col gap-1">
             {asideOpen ? (
               <AsideContainer showComponent={showComponent} />
             ) : filterOpen ? (
-              <MobileFilter
-                allVideos={allVideos}
-                getTags={getCategory}
-                setTags={setCategory}
-                handleSubcategoryClick={handleSubcategoryClick}
-                getSubcategory={getTag}
-                setSubcategory={setTag}
-                setIsMoreConcepts={setIsMoreConcepts}
-                ConceptList={ConceptList}
-                isMoreConcepts={isMoreConcepts}
-              />
+              <TagFilterContainer />
             ) : (
               <>
                 {showComponent && <TagFilterContainer />}

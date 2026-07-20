@@ -30,7 +30,6 @@ function useVideoDetails() {
       ) || [],
     [data, getCategory],
   );
-  console.log(getCategory);
 
   const allVideos: Video[] =
     filteredTag.filter((video: Video) =>

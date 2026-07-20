@@ -1,49 +1,43 @@
-import React from "react";
+import type { TagFilterSectionData } from "@/types/TagFilterSectionData";
 import TagFilterButton from "./TagFilterButton";
-interface ITagFilterSectionProps {
-  title: string;
-  classNames: { active?: string; inactive?: string; background?: string };
-  isMore: boolean;
-  items: string[];
-  selected: string[];
-  onClick: (item: string) => void;
-  onToggle: () => void;
 
-  children?: React.ReactNode;
+interface TagFilterSectionProps {
+  section: TagFilterSectionData;
+  selected: string[];
+  onSelect: (tag: string) => void;
 }
-const TagFilterSection: React.FunctionComponent<ITagFilterSectionProps> = ({
-  title,
-  classNames,
-  isMore,
-  items,
+
+export default function TagFilterSection({
+  section,
   selected,
-  onClick,
-  onToggle,
-  children,
-}) => {
+  onSelect,
+}: TagFilterSectionProps) {
   return (
-    <div
-      className={`mx-2 mt-2 flex flex-col gap-2 overflow-hidden sm:flex-row sm:flex-wrap`}
-    >
-      <h2>{title}</h2>
-      {items?.map((item, index) => (
+    <div className="mx-2 flex flex-col gap-2 overflow-hidden sm:flex-row sm:flex-wrap">
+      <h2>{section.title}</h2>
+
+      {section.items.map((item) => (
         <span
-          onClick={() => onClick(item)}
-          className={`${selected.includes(item) ? classNames.active : classNames.inactive} h-auto w-auto cursor-pointer rounded px-1 py-1 text-zinc-400 inset-ring-1`}
-          key={index}
+          key={item}
+          onClick={() => onSelect(item)}
+          className={`${
+            selected.includes(item)
+              ? section.classNames.active
+              : section.classNames.inactive
+          } h-auto w-auto cursor-pointer rounded px-1 py-1 inset-ring-1`}
         >
           {item}
         </span>
       ))}
+
       <TagFilterButton
-        isMore={isMore}
-        onToggle={onToggle}
+        isMore={section.isMore}
+        onToggle={section.toggle}
         classNames={{
-          active: classNames.active,
-          inactive: classNames.background,
+          active: section.classNames.active,
+          inactive: section.classNames.background,
         }}
       />
     </div>
   );
-};
-export default TagFilterSection;
+}

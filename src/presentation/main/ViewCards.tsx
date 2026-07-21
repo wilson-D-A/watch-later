@@ -1,8 +1,7 @@
+import UsePatchTagContainer from "@/interaction/UsePatchTagContainer";
 import Image from "next/image";
-import { useState } from "react";
-import usePatchTags from "../../hooks/services/usePatchTags";
-import Modal from "../Modal";
 function ViewCards({
+  children,
   id,
   url,
   title,
@@ -12,6 +11,7 @@ function ViewCards({
   topics,
   getYouTubeId,
 }: {
+  children?: React.ReactNode;
   id: number;
   url: string;
   title: string;
@@ -21,88 +21,18 @@ function ViewCards({
   topics: string;
   getYouTubeId: (url: string) => string | null;
 }) {
-  const [showDialog, setShowDialog] = useState(false);
-  const [changeTag, setChangeTag] = useState<{ [key: string]: string }>({
-    concept: "",
-    tool: "",
-    topic: "",
-  });
-  const mutate = usePatchTags();
-
-  const onClose = () => {
-    setShowDialog(false);
-    setChangeTag({
-      concept: "",
-      tool: "",
-      topic: "",
-    });
-  };
-  const nextTags = {
-    concept: changeTag.concept || concept,
-    tool: changeTag.tool || tools,
-    topic: changeTag.topic || topics,
-  };
-  const onOk = (id: number) => {
-    mutate.mutate({
-      id,
-      tags: nextTags,
-    });
-
-    onClose();
-  };
-
   return (
-    <div className="relative" key={id}>
-      <button
-        className="absolute top-2 right-2 z-10 flex size-7 cursor-pointer gap-2 rounded-full bg-zinc-300/75 px-1 py-1 text-xs"
-        onClick={(e) => {
-          setShowDialog(true);
-          e.stopPropagation();
-        }}
-      >
-        {" "}
-      </button>
+    <div
+      className="relative"
 
-      <Modal
-        onOk={() => onOk(id)}
-        showDialog={showDialog}
-        title="Edit Video Tags"
-        onClose={onClose}
-      >
-        <form action="">
-          <h1>concept</h1>
-
-          <input
-            placeholder={concept}
-            className="bg-concept mb-2 w-full rounded px-2 py-1 text-zinc-300 inset-ring-1 inset-ring-[#aad97d] outline-none"
-            type="text"
-
-            onChange={(e) => {
-              setChangeTag({ ...changeTag, concept: e.target.value });
-            }}
-          />
-          <h1>tools</h1>
-
-          <input
-            placeholder={tools}
-            className="border-border bg-tools inset-1ring-1 mb-2 w-full rounded border-2 px-2 py-1 text-zinc-300 inset-ring-1 inset-ring-[#5a97d6] outline-none"
-            type="text"
-            onChange={(e) => {
-              setChangeTag({ ...changeTag, tool: e.target.value });
-            }}
-          />
-          <h1>topics</h1>
-          <input
-            placeholder={topics}
-            className="border-border bg-topics inset-0 mb-2 w-full rounded border-2 px-2 py-1 text-zinc-300 inset-ring-1 inset-ring-[#b7a1ff] outline-none"
-            type="text"
-            onChange={(e) => {
-              setChangeTag({ ...changeTag, topic: e.target.value });
-            }}
-          />
-        </form>
-      </Modal>
-
+      key={id}
+    >
+      <UsePatchTagContainer
+        id={id}
+        concept={concept}
+        tools={tools}
+        topics={topics}
+      />
       <div
         onClick={() => {
           window.open(url, "_blank");

@@ -20,11 +20,22 @@ export const patchTags = async (id: number, tags: Record<string, string>) => {
   return await api
     .patch(`/videos/${id}`, tags)
     .then((res) => {
-      console.log("patchTags response", res.data);
       return res.data;
     })
     .catch((error) => {
       console.error("patchTags failed", error);
+      return null;
+    });
+};
+
+export const deleteVideo = async (id: number) => {
+  return await api
+    .delete(`/videos/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error("deleteVideo failed", error);
       return null;
     });
 };

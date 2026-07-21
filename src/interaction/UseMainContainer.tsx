@@ -1,11 +1,13 @@
 import { getYouTubeId, useVideoDetails } from "@/hooks/logic/videoDetails";
 import ViewCards from "@/presentation/main/ViewCards";
 import * as React from "react";
-interface IMainProps {
+interface IUseMainContainerProps {
   children?: React.ReactNode;
 }
 
-const Main: React.FunctionComponent<IMainProps> = ({ children }) => {
+const UseMainContainer: React.FunctionComponent<IUseMainContainerProps> = ({
+  children,
+}) => {
   const { filteredVideos } = useVideoDetails();
 
   return (
@@ -28,4 +30,4 @@ const Main: React.FunctionComponent<IMainProps> = ({ children }) => {
   );
 };
 
-export default Main;
+export default UseMainContainer;

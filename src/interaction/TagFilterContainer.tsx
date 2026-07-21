@@ -1,6 +1,6 @@
 import TagFilterSection from "@/presentation/tagFilter/TagFilterSection";
 import { useMediaQuery } from "react-responsive";
-import TagMobileFilter from "../presentation/tagFilter/TagMobileFilter";
+import TagMobileFilter from "../presentation/tagFilter/TagMobileFilterSection";
 import useTagFilterContainer from "./useTagFilterContainer";
 function TagFilterContainer() {
   const props = useTagFilterContainer();

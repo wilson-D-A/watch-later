@@ -11,7 +11,17 @@ export interface TagFilterSectionData {
 }
 
 export interface TagFilterContainerProps {
+  show: boolean;
   sections: TagFilterSectionData[];
   selected: string[];
   onSelect: (tag: string) => void;
+}
+export interface Video {
+  id: number;
+  title: string;
+  url: string;
+  videoLength: string;
+  channelName: string;
+  category: string;
+  tags: { name: string }[];
 }

@@ -16,10 +16,13 @@ export const getVideos = async () => {
     });
 };
 
-export const patchTags = async (id: number, tags: Record<string, string>[]) => {
+export const patchTags = async (id: number, tags: Record<string, string>) => {
   return await api
     .patch(`/videos/${id}`, tags)
-    .then((res) => res.data)
+    .then((res) => {
+      console.log("patchTags response", res.data);
+      return res.data;
+    })
     .catch((error) => {
       console.error("patchTags failed", error);
       return null;

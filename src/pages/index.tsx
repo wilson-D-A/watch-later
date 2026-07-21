@@ -1,21 +1,11 @@
+import Main from "@/interaction/main";
 import { useEffect, useState } from "react";
 import { useFilterController } from "../hooks/controllers/useFilterController";
 import { useTagController } from "../hooks/controllers/useTagController";
-import { getYouTubeId, useVideoDetails } from "../hooks/logic/videoDetails";
 import TagFilterContainer from "../interaction/TagFilterContainer";
 import AsideContainer from "../interaction/useAsideContainer";
 import NavContainer from "../interaction/useNavContainer";
-import ViewCards from "../presentation/main/ViewCards";
 import Search from "../presentation/nav/search";
-export type Video = {
-  id: number;
-  title: string;
-  url: string;
-  videoLength: string;
-  channelName: string;
-  category: string;
-  tags: { name: string }[];
-};
 
 export default function WatchLater() {
   const {
@@ -37,9 +27,6 @@ export default function WatchLater() {
     setIsMoreTopics,
   } = useTagController();
   const [showComponent, setShowComponent] = useState<boolean>(false);
-
-  const { filteredVideos, allVideos, ConceptList, categoryCounts } =
-    useVideoDetails();
 
   useEffect(() => {
     const handleResize = () => {
@@ -80,19 +67,7 @@ export default function WatchLater() {
                 <section
                   className={`grid min-h-0 flex-1 scrollbar-none grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 overflow-x-clip overflow-y-auto`}
                 >
-                  {filteredVideos.map((video) => (
-                    <ViewCards
-                      key={video.id}
-                      id={video.id}
-                      url={video.url}
-                      title={video.title}
-                      channelName={video.channelName}
-                      concept={video.tags[0].name}
-                      tools={video.tags[1].name}
-                      topics={video.tags[2].name}
-                      getYouTubeId={getYouTubeId}
-                    />
-                  ))}
+                  <Main />
                 </section>
               </>
             )}

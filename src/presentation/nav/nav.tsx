@@ -1,5 +1,5 @@
+import type { Video } from "@/types/TagFilterSectionData";
 import * as React from "react";
-import type { Video } from "../../pages/index";
 
 interface INavProps {
   allVideos: Video[];

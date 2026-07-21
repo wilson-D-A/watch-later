@@ -1,5 +1,5 @@
+import type { Video } from "@/types/TagFilterSectionData";
 import { useMemo } from "react";
-import type { Video } from "../../pages/index";
 import { useFilterController } from "../controllers/useFilterController";
 import { useTagController } from "../controllers/useTagController";
 import useVideos from "../services/useGetVideos";

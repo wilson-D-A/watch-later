@@ -1,5 +1,5 @@
+import type { TagFilterContainerProps } from "@/types/TagFilterSectionData";
 import * as React from "react";
-import type { TagFilterContainerProps } from "./types";
 
 const TagMobileFilter: React.FC<TagFilterContainerProps> = ({
   show,
@@ -12,7 +12,6 @@ const TagMobileFilter: React.FC<TagFilterContainerProps> = ({
   if (!show) return null;
 
   const section = sections[activeSection];
-  console.log(section);
 
   return (
     <div className="border-border relative h-auto min-h-0 w-auto flex-1 overflow-y-auto rounded border-2">

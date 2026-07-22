@@ -6,9 +6,9 @@ const api = axios.create({
   timeout: 10000,
 });
 
-export const getVideos = async () => {
+export const getVideos = async ({ pageParam }: { pageParam: number }) => {
   return await api
-    .get("/videos")
+    .get("/videos", { params: { cursor: pageParam } })
     .then((res) => res.data)
     .catch((error) => {
       console.error("getVideos failed", error);

@@ -7,25 +7,26 @@ import useVideos from "../services/useGetVideos";
 function useVideoDetails() {
   const { getTag } = useTagController();
   const { getCategory, search } = useFilterController();
+  let nextCursor: number | null = 0;
   const query = useVideos();
-
   const data = query.data;
+  const page = data?.pages.map((page) => page).flat() || [];
 
   const categoryCounts: Record<string, number> = useMemo(
     () =>
-      Array.isArray(data)
-        ? data.reduce((acc: Record<string, number>, item: Video) => {
+      Array.isArray(page)
+        ? page.reduce((acc: Record<string, number>, item: Video) => {
             acc[item.category] = (acc[item.category] || 0) + 1;
 
             return acc;
           }, {})
         : {},
-    [data],
+    [page],
   );
 
   const filteredTag: Video[] = useMemo(
     () =>
-      data?.filter(
+      page.filter(
         (video: Video) => getCategory === "" || video.category === getCategory,
       ) || [],
     [data, getCategory],

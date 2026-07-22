@@ -1,6 +1,6 @@
 import { getYouTubeId, useVideoDetails } from "@/hooks/logic/videoDetails";
 import ViewCards from "@/presentation/main/ViewCards";
-import * as React from "react";
+import React, { useEffect, useRef } from "react";
 interface IUseMainContainerProps {
   children?: React.ReactNode;
 }
@@ -8,7 +8,34 @@ interface IUseMainContainerProps {
 const UseMainContainer: React.FunctionComponent<IUseMainContainerProps> = ({
   children,
 }) => {
-  const { filteredVideos } = useVideoDetails();
+  const [inView, setInView] = React.useState(false);
+  const { filteredVideos, status, fetchNextPage } = useVideoDetails();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (inView && status === "success") {
+      fetchNextPage();
+    }
+  }, [inView, status, fetchNextPage]);
 
   return (
     <>
@@ -25,7 +52,7 @@ const UseMainContainer: React.FunctionComponent<IUseMainContainerProps> = ({
           getYouTubeId={getYouTubeId}
         />
       ))}
-      {/* < */}
+      <div ref={containerRef}>.</div>
     </>
   );
 };

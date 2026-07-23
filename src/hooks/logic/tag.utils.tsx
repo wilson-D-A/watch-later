@@ -1,4 +1,4 @@
-import type { Video } from "@/pages/index";
+import type { Video } from "@/types/TagFilterSectionData";
 
 export function getUniqueTags(videos: Video[], index: number) {
   return [...new Set(videos.map((v) => v.tags[index].name))].sort();

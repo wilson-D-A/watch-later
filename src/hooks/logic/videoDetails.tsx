@@ -8,7 +8,7 @@ function useVideoDetails() {
   const { getTag } = useTagController();
   const { getCategory, search } = useFilterController();
   let nextCursor: number | null = 0;
-  const query = useVideos();
+  const query = useVideos(getCategory);
   const data = query.data;
   const page = data?.pages.map((page) => page).flat() || [];
 

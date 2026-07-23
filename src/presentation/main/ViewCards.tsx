@@ -42,6 +42,7 @@ function ViewCards({
         <div className="relative mb-2 h-40 w-full">
           <Image
             src={`https://i.ytimg.com/vi/${getYouTubeId(url)}/mqdefault.jpg`}
+            loading="lazy"
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 300px"

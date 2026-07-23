@@ -1,8 +1,7 @@
-import type { Video } from "@/types/TagFilterSectionData";
 import * as React from "react";
 
 interface INavProps {
-  allVideos: Video[];
+  allVideos: number;
   videoLength: string;
   setSearch: (value: string) => void;
 
@@ -17,7 +16,7 @@ const Nav: React.FunctionComponent<INavProps> = (props) => {
       <div className="flex flex-col items-center gap-3 sm:flex-row">
         <h1 className="text-accent text-xl font-black">Watch Later</h1>
         <span className="bg-border-900 h-auto rounded px-5 py-1 text-center align-middle text-zinc-300 inset-shadow-sm inset-shadow-zinc-900/60">
-          {allVideos?.length} videos
+          {allVideos} videos
         </span>
       </div>
       {showComponent && (

@@ -1,6 +1,6 @@
 interface IListCategoriesProps {
   category: string;
-  count: number;
+  count: string | number;
   getCategory: string;
   handleCategoryClick: (category: string) => void;
 }

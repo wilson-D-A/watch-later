@@ -1,13 +1,13 @@
-import { getUniqueTags, getVisibleTags } from "@/hooks/logic/tag.utils";
+import { getVisibleTags } from "@/hooks/logic/tag.utils";
 import { useFilterController } from "../hooks/controllers/useFilterController";
 import { useTagController } from "../hooks/controllers/useTagController";
 import { useCollapsedCount } from "../hooks/logic/UseCollapsedCount";
 import { useVideoDetails } from "../hooks/logic/videoDetails";
 
 function TagFilterContainer() {
-  const { allVideos, ConceptList } = useVideoDetails();
+  const { tagTypes } = useVideoDetails();
 
-  const { getCategory, setCategory } = useFilterController();
+  const { getCategory } = useFilterController();
   const {
     setIsMoreConcepts,
     isMoreConcepts,
@@ -20,20 +20,12 @@ function TagFilterContainer() {
   } = useTagController();
   const collapsedCount = useCollapsedCount();
   const concepts = getVisibleTags(
-    getUniqueTags(allVideos, 0),
+    tagTypes.concept,
     isMoreConcepts,
     collapsedCount,
   );
-  const tools = getVisibleTags(
-    getUniqueTags(allVideos, 1),
-    isMoreTools,
-    collapsedCount,
-  );
-  const topics = getVisibleTags(
-    getUniqueTags(allVideos, 2),
-    isMoreTopics,
-    collapsedCount,
-  );
+  const tools = getVisibleTags(tagTypes.tool, isMoreTools, collapsedCount);
+  const topics = getVisibleTags(tagTypes.topic, isMoreTopics, collapsedCount);
 
   const handleSubcategoryClick = (subcategory: string) => {
     if (getTag.includes(subcategory)) {

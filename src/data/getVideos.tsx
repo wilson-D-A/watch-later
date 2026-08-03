@@ -21,13 +21,28 @@ export const getCategories = async () => {
     });
 };
 
+export const getTagsByCategory = async (category: string) => {
+  return await api
+    .get<{ name: string; type: string }[]>("/tags_by_category", {
+      params: { category: category },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error("getTagsByCategory failed", error);
+      return [];
+    });
+};
+
 export const getVideos = async (
   { pageParam }: { pageParam: number },
   category: string,
+  tags: string[] = [],
 ) => {
   return await api
     .get("/videos", {
-      params: { cursor: pageParam, category: category },
+      params: { cursor: pageParam, category: category, tags: tags },
     })
     .then((res) => res.data)
     .catch((error) => {

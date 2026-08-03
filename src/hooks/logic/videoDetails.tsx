@@ -2,15 +2,42 @@ import type { Video } from "@/types/TagFilterSectionData";
 import { useMemo } from "react";
 import { useFilterController } from "../controllers/useFilterController";
 import { useTagController } from "../controllers/useTagController";
+import useGetTagsByCategory from "../services/useGetTagsByCategory";
 import useVideos from "../services/useGetVideos";
 
 function useVideoDetails() {
   const { getTag } = useTagController();
   const { getCategory, search } = useFilterController();
   let nextCursor: number | null = 0;
-  const query = useVideos(getCategory);
+  const query = useVideos(getCategory, getTag);
   const data = query.data;
   const page = data?.pages.map((page) => page).flat() || [];
+  const { data: tagsByCategory } = useGetTagsByCategory(getCategory);
+
+  const tagTypes: { concept: string[]; tool: string[]; topic: string[] } =
+    useMemo(() => {
+      const conceptTags: Set<string> = new Set<string>();
+      const toolTags: Set<string> = new Set<string>();
+      const topicTags: Set<string> = new Set<string>();
+
+      if (tagsByCategory) {
+        tagsByCategory.forEach((tag: { type: string; name: string }) => {
+          if (tag.type === "concept") {
+            conceptTags.add(tag.name);
+          } else if (tag.type === "tool") {
+            toolTags.add(tag.name);
+          } else if (tag.type === "topic") {
+            topicTags.add(tag.name);
+          }
+        });
+      }
+
+      return {
+        concept: Array.from(conceptTags).sort(),
+        tool: Array.from(toolTags).sort(),
+        topic: Array.from(topicTags).sort(),
+      };
+    }, [tagsByCategory]);
 
   const categoryCounts: Record<string, number> = useMemo(
     () =>
@@ -71,6 +98,7 @@ function useVideoDetails() {
     ConceptList,
     categoryCounts,
     filteredVideos,
+    tagTypes,
   };
 }
 function getYouTubeId(url: string): string | null {

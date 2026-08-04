@@ -6,11 +6,11 @@ const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   /* config options here */
-
+  allowedDevOrigins: ["192.168.1.23"],
   rewrites: async () => [
     {
       source: "/backend/:path*",
-      destination: "http://127.0.0.1:8000/:path*",
+      destination: "https://watchlater-681724086022.us-east1.run.app/:path*",
     },
   ],
 

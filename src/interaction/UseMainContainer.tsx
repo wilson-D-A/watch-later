@@ -36,7 +36,6 @@ const UseMainContainer: React.FunctionComponent<IUseMainContainerProps> = ({
       fetchNextPage();
     }
   }, [inView, status, fetchNextPage]);
-
   return (
     <>
       {filteredVideos.map((video) => (

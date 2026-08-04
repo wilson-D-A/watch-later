@@ -2,7 +2,6 @@ import * as React from "react";
 
 interface INavProps {
   allVideos: number;
-  videoLength: string;
   setSearch: (value: string) => void;
 
   showComponent: boolean | undefined;

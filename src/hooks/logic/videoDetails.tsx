@@ -1,5 +1,5 @@
 import type { Video } from "@/types/TagFilterSectionData";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useFilterController } from "../controllers/useFilterController";
 import { useTagController } from "../controllers/useTagController";
 import useGetTagsByCategory from "../services/useGetTagsByCategory";
@@ -9,7 +9,7 @@ function useVideoDetails() {
   const { getTag } = useTagController();
   const { getCategory, search } = useFilterController();
   let nextCursor: number | null = 0;
-  const query = useVideos(getCategory, getTag);
+  const query = useVideos(getCategory);
   const data = query.data;
   const page = data?.pages.map((page) => page).flat() || [];
   const { data: tagsByCategory } = useGetTagsByCategory(getCategory);
@@ -66,36 +66,34 @@ function useVideoDetails() {
           video.channelName.toLowerCase().includes(search.toLowerCase())
         : true,
     ) || [];
-  const firstSuggestion: string | undefined = useMemo(() => {
-    if (!search) return undefined;
 
+  const filteredVideos = useMemo(() => {
     return (
-      filteredTag
-        .find((item: Video) =>
-          item.title.toLowerCase().startsWith(search.toLowerCase()),
-        )
-        ?.title?.slice(search.length)
-        .toLowerCase() || undefined
+      allVideos?.filter((video) => {
+        return getTag.length > 0
+          ? video.tags.some((tag) => {
+              return getTag.includes(tag.name);
+            })
+          : true;
+      }) || []
     );
-  }, [filteredTag, search]);
+  }, [allVideos, getTag]);
 
-  const ConceptList = [
-    ...new Set(allVideos.map((video) => video.tags[0].name)),
-  ].toSorted((a, b) => a.localeCompare(b));
-
-  const filteredVideos =
-    allVideos?.filter((video) =>
-      getTag.length > 0
-        ? video.tags.some((subcategory) => getTag.includes(subcategory.name))
-        : true,
-    ) || [];
+  // fetch all pages when tag filter is active so client-side filtering has full data
+  useEffect(() => {
+    if (getTag.length > 0 && query.hasNextPage && !query.isFetchingNextPage) {
+      query.fetchNextPage();
+    }
+  }, [
+    getTag,
+    query.hasNextPage,
+    query.isFetchingNextPage,
+    query.fetchNextPage,
+  ]);
 
   return {
     ...query,
     filteredTag,
-    allVideos,
-    firstSuggestion,
-    ConceptList,
     categoryCounts,
     filteredVideos,
     tagTypes,

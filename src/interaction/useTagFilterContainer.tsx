@@ -24,6 +24,7 @@ function TagFilterContainer() {
     isMoreConcepts,
     collapsedCount,
   );
+
   const tools = getVisibleTags(tagTypes.tool, isMoreTools, collapsedCount);
   const topics = getVisibleTags(tagTypes.topic, isMoreTopics, collapsedCount);
 

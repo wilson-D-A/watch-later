@@ -43,9 +43,7 @@ const TagMobileFilter: React.FC<TagFilterContainerProps> = ({
                 ? section.classNames.active
                 : section.classNames.inactive
             }`}
-          >
-            {(console.log(item), item)}
-          </span>
+          ></span>
         ))}
       </div>
     </div>

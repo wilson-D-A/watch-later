@@ -91,8 +91,20 @@ function useVideoDetails() {
     query.fetchNextPage,
   ]);
 
+  const firstSuggestion: string | undefined = useMemo(() => {
+    if (!search) return undefined;
+    const lowerSearch = search.toLowerCase();
+    const suggestion = allVideos.find(
+      (video) =>
+        video.title.toLowerCase().includes(lowerSearch) ||
+        video.channelName.toLowerCase().includes(lowerSearch),
+    );
+    return suggestion ? suggestion.title : undefined;
+  }, [search, allVideos]);
+
   return {
     ...query,
+    firstSuggestion,
     filteredTag,
     categoryCounts,
     filteredVideos,

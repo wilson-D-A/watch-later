@@ -13,7 +13,6 @@ const UseMainContainer: React.FunctionComponent<IUseMainContainerProps> = ({
   const { filteredVideos, status, fetchNextPage, isLoading } =
     useVideoDetails();
   const containerRef = useRef<HTMLDivElement>(null);
-  console.log(isLoading, "isLoading");
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {

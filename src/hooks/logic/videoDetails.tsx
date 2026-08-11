@@ -9,7 +9,7 @@ function useVideoDetails() {
   const { getTag } = useTagController();
   const { getCategory, search } = useFilterController();
   let nextCursor: number | null = 0;
-  const query = useVideos(getCategory);
+  const query = useVideos(getCategory, getTag);
   const data = query.data;
   const page = data?.pages.map((page) => page).flat() || [];
   const { data: tagsByCategory } = useGetTagsByCategory(getCategory);

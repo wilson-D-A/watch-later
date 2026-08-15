@@ -12,6 +12,7 @@ type UsePatchTagContainerProps = {
   concept: string;
   tools: string;
   topics: string;
+  position?: { delete: string; edit: string };
 };
 
 function UsePatchTagContainer({
@@ -19,6 +20,10 @@ function UsePatchTagContainer({
   concept,
   tools,
   topics,
+  position = {
+    delete: "absolute top-2 right-2",
+    edit: "absolute top-12 right-2",
+  },
 }: UsePatchTagContainerProps) {
   const [activeModal, setActiveModal] = useState<"edit" | "delete" | null>(
     null,
@@ -75,7 +80,7 @@ function UsePatchTagContainer({
       <ModalButton
         handleShowDialog={handleShowEditDialog}
         classname={{
-          position: "absolute top-2 right-2",
+          position: position.edit,
           color: "bg-zinc-300/75 rounded px-1 py-1 text-sm text-zinc-300",
           hoverColor: "hover:bg-zinc-200",
         }}
@@ -85,7 +90,7 @@ function UsePatchTagContainer({
       <ModalButton
         handleShowDialog={handleShowDeleteDialog}
         classname={{
-          position: "absolute top-12 right-2",
+          position: position.delete,
           color: "bg-red-500/75 rounded px-1 py-1 text-sm text-zinc-300",
           hoverColor: "hover:bg-red-500",
         }}

@@ -9,7 +9,7 @@ function ViewCards({
   concept,
   tools,
   topics,
-  getYouTubeId,
+  thumbnail,
 }: {
   children?: React.ReactNode;
   id: number;
@@ -19,7 +19,7 @@ function ViewCards({
   concept: string;
   tools: string;
   topics: string;
-  getYouTubeId: (url: string) => string | null;
+  thumbnail: string;
 }) {
   return (
     <div
@@ -41,7 +41,7 @@ function ViewCards({
       >
         <div className="relative mb-2 h-40 w-full">
           <Image
-            src={`https://i.ytimg.com/vi/${getYouTubeId(url)}/mqdefault.jpg`}
+            src={thumbnail}
             loading="lazy"
             alt={title}
             fill

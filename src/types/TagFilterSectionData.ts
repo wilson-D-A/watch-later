@@ -21,6 +21,8 @@ export interface Video {
   title: string;
   url: string;
   videoLength: string;
+  is_short: boolean;
+  thumbnail: string;
   channelName: string;
   category: string;
   tags: { name: string }[];

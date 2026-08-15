@@ -8,28 +8,10 @@ import NavContainer from "../interaction/useNavContainer";
 import Search from "../presentation/nav/search";
 
 export default function WatchLater() {
-  const {
-    getCategory,
-    setCategory,
-    asideOpen,
-    setAsideOpen,
-    filterOpen,
-    setFilterOpen,
-  } = useFilterController();
-  const {
-    getTag,
-    setTag,
-    isMoreConcepts,
-    setIsMoreConcepts,
-    isMoreTools,
-    setIsMoreTools,
-    isMoreTopics,
-    setIsMoreTopics,
-  } = useTagController();
+  const { asideOpen, filterOpen } = useFilterController();
+  const { getTag, setTag } = useTagController();
   const [showComponent, setShowComponent] = useState<boolean>(false);
-  // useEffect(() => {
-  //   deleteVideo(999);
-  // }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setShowComponent(window.innerWidth >= 640);

@@ -11,7 +11,19 @@ function useVideoDetails() {
   let nextCursor: number | null = 0;
   const query = useVideos(getCategory, getTag);
   const data = query.data;
-  const page = data?.pages.map((page) => page).flat() || [];
+  const page = data?.pages.flat() || [];
+  const uniqueVideos = useMemo(() => {
+    const seen = new Set<number>();
+
+    return page.filter((video: Video) => {
+      if (seen.has(video.id)) {
+        return false;
+      }
+
+      seen.add(video.id);
+      return true;
+    });
+  }, [page]);
   const { data: tagsByCategory } = useGetTagsByCategory(getCategory);
 
   const tagTypes: { concept: string[]; tool: string[]; topic: string[] } =
@@ -41,22 +53,22 @@ function useVideoDetails() {
 
   const categoryCounts: Record<string, number> = useMemo(
     () =>
-      Array.isArray(page)
-        ? page.reduce((acc: Record<string, number>, item: Video) => {
+      Array.isArray(uniqueVideos)
+        ? uniqueVideos.reduce((acc: Record<string, number>, item: Video) => {
             acc[item.category] = (acc[item.category] || 0) + 1;
 
             return acc;
           }, {})
         : {},
-    [page],
+    [uniqueVideos],
   );
 
   const filteredTag: Video[] = useMemo(
     () =>
-      page.filter(
+      uniqueVideos.filter(
         (video: Video) => getCategory === "" || video.category === getCategory,
       ) || [],
-    [data, getCategory],
+    [uniqueVideos, getCategory],
   );
 
   const allVideos: Video[] =
@@ -111,11 +123,5 @@ function useVideoDetails() {
     tagTypes,
   };
 }
-function getYouTubeId(url: string): string | null {
-  const match = url.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-  );
-  return match ? match[1] : null;
-}
 
-export { getYouTubeId, useVideoDetails };
+export { useVideoDetails };

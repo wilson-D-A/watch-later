@@ -1,8 +1,26 @@
+import type { Video } from "@/types/TagFilterSectionData";
 import axios from "axios";
 
 export interface CategoriesResponse {
   categories: Record<string, string | number>;
   all_videos: number;
+}
+
+export interface VideosCursorResponse {
+  items: Video[];
+  next_cursor: {
+    cursor_value: string;
+    cursor_id: number;
+  } | null;
+  has_next_page: boolean;
+}
+
+export type VideoSortBy = "title" | "channelName";
+export type VideoSortOrder = "asc" | "desc";
+
+export interface VideosPageParam {
+  cursor_value: string | null;
+  cursor_id: number | null;
 }
 
 const api = axios.create({
@@ -35,19 +53,38 @@ export const getTagsByCategory = async (category: string) => {
     });
 };
 
-export const getVideos = async (
-  { pageParam }: { pageParam: number },
-  category: string,
-  tags: string[] = [],
-) => {
+export const getVideos = async ({
+  pageParam,
+  category,
+  tag,
+  sortBy = "channelName",
+  sortOrder = "desc",
+}: {
+  pageParam: VideosPageParam | null;
+  category?: string;
+  tag?: string[];
+  sortBy?: VideoSortBy;
+  sortOrder?: VideoSortOrder;
+}) => {
   return await api
-    .get("/videos", {
-      params: { cursor: pageParam, category: category, tags: tags },
+    .get<VideosCursorResponse>("/videos", {
+      params: {
+        cursor_value: pageParam?.cursor_value ?? null,
+        cursor_id: pageParam?.cursor_id ?? null,
+        category: category || null,
+        tag: tag?.length ? tag : null,
+        sort_by: sortBy,
+        sort_order: sortOrder,
+      },
     })
     .then((res) => res.data)
     .catch((error) => {
       console.error("getVideos failed", error);
-      return [];
+      return {
+        items: [],
+        next_cursor: null,
+        has_next_page: false,
+      };
     });
 };
 

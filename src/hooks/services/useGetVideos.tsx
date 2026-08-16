@@ -1,15 +1,34 @@
-import { Video } from "@/types/TagFilterSectionData";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getVideos } from "../../data/getVideos";
+import {
+  getVideos,
+  VideosCursorResponse,
+  VideoSortBy,
+  VideoSortOrder,
+} from "../../data/getVideos";
 
-function useVideos(category?: string, tags?: string[]) {
+function useVideos(
+  category?: string,
+  tags?: string[],
+  sortBy: VideoSortBy = "title",
+  sortOrder: VideoSortOrder = "asc",
+) {
   return useInfiniteQuery({
-    queryKey: ["videos", category],
-    initialPageParam: 0,
+    queryKey: ["videos", category, tags ?? [], sortBy, sortOrder],
+    initialPageParam: null,
     queryFn: ({ pageParam }) =>
-      getVideos({ pageParam }, category || "", tags || []),
-    getNextPageParam: (lastPage: Video[]) => {
-      return lastPage.length > 0 ? lastPage[lastPage.length - 1].id : null;
+      getVideos({
+        pageParam,
+        category,
+        tag: tags,
+        sortBy,
+        sortOrder,
+      }),
+    getNextPageParam: (lastPage: VideosCursorResponse) => {
+      if (!lastPage.has_next_page || lastPage.next_cursor == null) {
+        return undefined;
+      }
+
+      return lastPage.next_cursor;
     },
   });
 }

@@ -8,22 +8,14 @@ import useVideos from "../services/useGetVideos";
 function useVideoDetails() {
   const { getTag } = useTagController();
   const { getCategory, search } = useFilterController();
-  let nextCursor: number | null = 0;
   const query = useVideos(getCategory, getTag);
   const data = query.data;
-  const page = data?.pages.flat() || [];
-  const uniqueVideos = useMemo(() => {
-    const seen = new Set<number>();
+  const page: Video[] =
+    data?.pages.reduce<Video[]>((acc, currentPage) => {
+      acc.push(...currentPage.items);
+      return acc;
+    }, []) || [];
 
-    return page.filter((video: Video) => {
-      if (seen.has(video.id)) {
-        return false;
-      }
-
-      seen.add(video.id);
-      return true;
-    });
-  }, [page]);
   const { data: tagsByCategory } = useGetTagsByCategory(getCategory);
 
   const tagTypes: { concept: string[]; tool: string[]; topic: string[] } =
@@ -53,22 +45,22 @@ function useVideoDetails() {
 
   const categoryCounts: Record<string, number> = useMemo(
     () =>
-      Array.isArray(uniqueVideos)
-        ? uniqueVideos.reduce((acc: Record<string, number>, item: Video) => {
+      Array.isArray(page)
+        ? page.reduce((acc: Record<string, number>, item: Video) => {
             acc[item.category] = (acc[item.category] || 0) + 1;
 
             return acc;
           }, {})
         : {},
-    [uniqueVideos],
+    [page],
   );
 
   const filteredTag: Video[] = useMemo(
     () =>
-      uniqueVideos.filter(
+      page.filter(
         (video: Video) => getCategory === "" || video.category === getCategory,
       ) || [],
-    [uniqueVideos, getCategory],
+    [page, getCategory],
   );
 
   const allVideos: Video[] =

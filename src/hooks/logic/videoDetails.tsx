@@ -10,12 +10,8 @@ function useVideoDetails() {
   const { getCategory, search } = useFilterController();
   const query = useVideos(getCategory, getTag);
   const data = query.data;
-  const page: Video[] =
-    data?.pages.reduce<Video[]>((acc, currentPage) => {
-      acc.push(...currentPage.items);
-      return acc;
-    }, []) || [];
-
+  const page: Video[] = data?.pages.flat() || [];
+  console.log("page", page);
   const { data: tagsByCategory } = useGetTagsByCategory(getCategory);
 
   const tagTypes: { concept: string[]; tool: string[]; topic: string[] } =

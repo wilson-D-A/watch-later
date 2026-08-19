@@ -1,7 +1,17 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getVideos, VideosPageParam } from "../../data/getVideos";
+import {
+  getVideos,
+  VideoSortBy,
+  VideoSortOrder,
+  VideosPageParam,
+} from "../../data/getVideos";
 
-function useVideos(category?: string, tags?: string[]) {
+function useVideos(
+  category?: string,
+  tags?: string[],
+  sortBy?: VideoSortBy,
+  sortOrder?: VideoSortOrder,
+) {
   return useInfiniteQuery({
     queryKey: ["videos", category, tags ?? [], sortBy, sortOrder],
     initialPageParam: null as VideosPageParam | null,

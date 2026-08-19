@@ -15,7 +15,7 @@ function useVideoDetails() {
       acc.push(...currentPage.items);
       return acc;
     }, []) || [];
-
+  console.log("page", data?.pageParams);
   const { data: tagsByCategory } = useGetTagsByCategory(getCategory);
 
   const tagTypes: { concept: string[]; tool: string[]; topic: string[] } =

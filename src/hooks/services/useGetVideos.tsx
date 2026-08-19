@@ -1,9 +1,9 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   getVideos,
-  VideosCursorResponse,
   VideoSortBy,
   VideoSortOrder,
+  VideosPageParam,
 } from "../../data/getVideos";
 
 function useVideos(
@@ -14,7 +14,9 @@ function useVideos(
 ) {
   return useInfiniteQuery({
     queryKey: ["videos", category, tags ?? [], sortBy, sortOrder],
-    initialPageParam: null,
+    initialPageParam: null as VideosPageParam | null,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
     queryFn: ({ pageParam }) =>
       getVideos({
         pageParam,
@@ -23,11 +25,11 @@ function useVideos(
         sortBy,
         sortOrder,
       }),
-    getNextPageParam: (lastPage: VideosCursorResponse) => {
+
+    getNextPageParam: (lastPage) => {
       if (!lastPage.has_next_page || lastPage.next_cursor == null) {
         return undefined;
       }
-
       return lastPage.next_cursor;
     },
   });
